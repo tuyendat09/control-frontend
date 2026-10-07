@@ -1,17 +1,14 @@
-import { Outlet, useLocation } from 'react-router'
+import { Outlet } from 'react-router'
 import { QuickLogSheet } from './components/QuickLogSheet'
 import { TabBar } from './components/TabBar'
 import { WeightSheet } from './components/weight-sheet/WeightSheet'
 import { DashboardUiProvider } from './context/DashboardUiProvider'
 import { useDashboardUi } from './hooks/useDashboardUi'
-import { useHideTabBar } from './hooks/useHideTabBar'
+import { useDashboardLayout } from './hooks/useDashboardLayout'
 
 function DashboardShell() {
-  const { pathname } = useLocation()
-  const hideTabBar = useHideTabBar()
+  const { tab, hideTabBar } = useDashboardLayout()
   const { quickLogOpen, weightOpen } = useDashboardUi()
-  // Re-run the pane entrance when switching tabs, not when drilling into a tab's sub-routes.
-  const tab = pathname.split('/')[1] ?? ''
 
   return (
     <>

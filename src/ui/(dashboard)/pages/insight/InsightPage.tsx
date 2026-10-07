@@ -7,7 +7,7 @@ import { VolumeCard } from './components/VolumeCard'
 import { WeightCard } from './components/WeightCard'
 import { useInsights } from './hooks/useInsights'
 
-export function InsightsPage() {
+export function InsightPage() {
   const t = useT()
   const insights = useInsights()
 
