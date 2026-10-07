@@ -30,6 +30,9 @@ export function useAnimationCheck(done: boolean) {
           .to(tickRef.current, { scale: 0.3, opacity: 0, duration: d(0.16), ease: 'power2.in' }, 0)
           .to(boxRef.current, { opacity: 1, duration: d(0.18), ease: 'none' }, 0.04)
       }
+      return () => {
+        first.current = true
+      }
     },
     { dependencies: [done] },
   )

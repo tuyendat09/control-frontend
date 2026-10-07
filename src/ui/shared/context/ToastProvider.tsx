@@ -7,7 +7,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const value = useMemo<ToastValue>(
     () => ({
       toast,
-      showToast: (message) => setToast((prev) => ({ id: (prev?.id ?? 0) + 1, message })),
+      showToast: (message, action) => setToast((prev) => ({ id: (prev?.id ?? 0) + 1, message, action })),
     }),
     [toast],
   )

@@ -143,3 +143,30 @@ export const AppleIcon = (p: IconProps) => (
     <path d="M12 7.6V5.2c0-1.5 1.2-2.7 2.7-2.7" />
   </Svg>
 )
+
+export const CalendarIcon = (p: IconProps) => (
+  <Svg strokeWidth={1.9} {...p}>
+    <rect x="3.5" y="5" width="17" height="15" rx="3" />
+    <path d="M3.5 10h17M8 3v4M16 3v4" />
+  </Svg>
+)
+
+export const ChevronDownIcon = (p: IconProps) => (
+  <Svg strokeWidth={2.4} {...p}>
+    <path d="M6 9l6 6 6-6" />
+  </Svg>
+)
+
+export const CopyIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="8" y="8" width="12" height="12" rx="3" />
+    <path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2" />
+  </Svg>
+)
+
+export const LockIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="5" y="11" width="14" height="9" rx="2" />
+    <path d="M8 11V8a4 4 0 018 0v3" />
+  </Svg>
+)

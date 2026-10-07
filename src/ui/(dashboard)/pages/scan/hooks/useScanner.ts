@@ -61,7 +61,7 @@ export function useScanner() {
       meal,
       kcal,
       macros,
-      items: [{ id: crypto.randomUUID(), name, qty: `${qty} ${unit}`, kcal }],
+      items: [{ id: crypto.randomUUID(), name, qty: `${qty} ${unit}`, kcal, macros }],
     })
     showToast(t(`Đã thêm ${kcal} kcal từ mã quét`, `Added ${kcal} kcal from scan`))
     navigate('/')

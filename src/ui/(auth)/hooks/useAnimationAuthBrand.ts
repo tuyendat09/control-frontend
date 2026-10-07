@@ -63,7 +63,10 @@ export function useAnimationAuthBrand(stage: AuthStage) {
       void document.fonts?.ready.then(() => {
         if (!gsap.isTweening(word)) settle()
       })
-      return () => window.removeEventListener('resize', settle)
+      return () => {
+        window.removeEventListener('resize', settle)
+        seen.current = false
+      }
     },
     { dependencies: [stage] },
   )
