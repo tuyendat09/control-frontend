@@ -25,6 +25,9 @@ export function useAnimationTabBar(quickLogOpen: boolean) {
       const instant = first.current
       first.current = false
       gsap.to(plusRef.current, { rotation: quickLogOpen ? 135 : 0, duration: instant ? 0 : 0.38, ease: 'plus' })
+      return () => {
+        first.current = true
+      }
     },
     { dependencies: [quickLogOpen] },
   )

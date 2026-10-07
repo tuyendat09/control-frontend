@@ -14,6 +14,9 @@ export function useAnimationAuthBack(stage: AuthStage) {
       if (!seen.current) gsap.set(ref.current, props)
       else gsap.to(ref.current, { ...props, duration: show ? 0.5 : 0.4, ease: 'expo' })
       seen.current = true
+      return () => {
+        seen.current = false
+      }
     },
     { dependencies: [stage] },
   )

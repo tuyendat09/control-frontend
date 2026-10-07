@@ -20,6 +20,9 @@ export function useAnimationRing(progress: number) {
         ease: 'draw',
         overwrite: 'auto',
       })
+      return () => {
+        first.current = true
+      }
     },
     { dependencies: [progress] },
   )
@@ -44,6 +47,9 @@ export function useAnimationBar(pct: number, index: number) {
         ease: 'draw',
         overwrite: 'auto',
       })
+      return () => {
+        first.current = true
+      }
     },
     { dependencies: [pct] },
   )

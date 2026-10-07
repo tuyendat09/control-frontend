@@ -20,7 +20,7 @@ export function useHome() {
       meal: 'dinner',
       kcal: combo.kcal,
       macros: combo.macros,
-      items: [{ id: crypto.randomUUID(), name, qty: '1', kcal: combo.kcal }],
+      items: [{ id: crypto.randomUUID(), name, qty: '1', kcal: combo.kcal, macros: combo.macros }],
     })
     showToast(t(`Đã thêm ${combo.kcal} kcal vào hôm nay`, `Added ${combo.kcal} kcal to today`))
   }

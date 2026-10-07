@@ -1,9 +1,12 @@
 import { TARGETS } from '@/data/nutrition'
+import { appToday, dateKey } from '@/lib/date'
 import { useTracker } from './useTracker'
 
 /** Calories + macros summed from today's logged meals. */
 export function useTodayTotals() {
-  const { entries } = useTracker()
+  const { entries: all } = useTracker()
+  const today = dateKey(appToday())
+  const entries = all.filter((e) => e.date === today)
   const totals = entries.reduce(
     (acc, e) => ({
       kcal: acc.kcal + e.kcal,

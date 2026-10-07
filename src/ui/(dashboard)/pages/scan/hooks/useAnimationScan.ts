@@ -86,6 +86,9 @@ export function useAnimationScan(scope: React.RefObject<HTMLElement | null>, { s
       const first = !modeSeen.current
       modeSeen.current = true
       gsap.to('[data-scan-frame]', { ...FRAME[mode], duration: first ? 0 : 0.5, ease: 'expo', overwrite: 'auto' })
+      return () => {
+        modeSeen.current = false
+      }
     },
     { scope, dependencies: [mode] },
   )

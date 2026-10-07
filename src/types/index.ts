@@ -22,10 +22,13 @@ export interface MealItem {
   name: string
   qty: string
   kcal: number
+  macros: Macros
 }
 
 export interface MealEntry {
   id: string
+  /** Local calendar day the meal belongs to, `YYYY-MM-DD`. */
+  date: string
   time: string
   name: string
   meal: MealType
