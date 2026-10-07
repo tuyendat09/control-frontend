@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#E9E6E0;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+  a{color:#1A1917}a:hover{color:#6E6A62}
+  *{box-sizing:border-box}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#E9E6E0;padding:64px 56px 96px;font-family:'Instrument Sans',system-ui,sans-serif;color:#1A1917;display:flex;flex-direction:column;gap:56px">
+
+  <div style="max-width:620px;display:flex;flex-direction:column;gap:10px">
+    <div style="font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#A29D94">Nourish · Color study</div>
+    <div style="font-family:'Instrument Serif',serif;font-size:42px;line-height:1.05;letter-spacing:-.015em">Màu chủ đạo &amp; bảng macro</div>
+    <div style="font-size:14px;line-height:1.6;color:#6E6A62">Bốn hướng màu chủ đạo trên thanh nav thật, và ba bảng macro đậm hơn bảng hiện tại. Mọi thứ khác — radius, font, hairline, shadow — giữ nguyên.</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;align-items:baseline;gap:12px">
+      <div style="font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#A29D94">C · Director's cut</div>
+      <div style="font-size:12px;color:#A29D94">hệ hoàn chỉnh — mực + pigment cùng độ sáng</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:22px">
+      <sc-for list="{{ systems }}" as="s" hint-placeholder-count="2">
+        <div id="{{ s.id }}" style="position:relative;width:466px;padding:30px 24px 24px;border-radius:28px;border:1px solid rgba(26,25,23,.055);box-shadow:0 1px 1px rgba(26,25,23,.03),0 3px 10px -6px rgba(26,25,23,.07);display:flex;flex-direction:column;gap:18px;background:{{ s.paper }}">
+          <div style="position:absolute;top:-11px;left:18px;padding:3px 9px;border-radius:999px;background:#1A1917;color:#F7F5F1;font-size:10.5px;font-weight:700;letter-spacing:.06em">{{ s.id }}</div>
+
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+            <div>
+              <div style="font-family:'Instrument Serif',serif;font-size:25px;line-height:1.1;color:{{ s.ink }}">{{ s.name }}</div>
+              <div style="font-size:12px;color:#A29D94;margin-top:2px">{{ s.sub }}</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <div style="width:26px;height:26px;border-radius:9px;border:1px solid rgba(26,25,23,.055);background:{{ s.ink }}"></div>
+              <div style="width:26px;height:26px;border-radius:9px;border:1px solid rgba(26,25,23,.055);background:{{ s.pDot }}"></div>
+              <div style="width:26px;height:26px;border-radius:9px;border:1px solid rgba(26,25,23,.055);background:{{ s.cDot }}"></div>
+              <div style="width:26px;height:26px;border-radius:9px;border:1px solid rgba(26,25,23,.055);background:{{ s.fDot }}"></div>
+            </div>
+          </div>
+
+          <div style="height:64px;border-radius:32px;background:{{ s.card }};border:1px solid rgba(26,25,23,.055);box-shadow:0 1px 2px rgba(26,25,23,.04),0 10px 30px -12px rgba(26,25,23,.14);display:flex;align-items:center;padding:0 6px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="{{ s.ink }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10.4L12 3.6l8.5 6.8V19a1.6 1.6 0 01-1.6 1.6H5.1A1.6 1.6 0 013.5 19z"></path><path d="M9.6 14.4c1.3 1.4 3.5 1.4 4.8 0"></path></svg>
+              <div style="font-size:10px;font-weight:600;color:{{ s.ink }}">Home</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6E6A62" stroke-width="1.7" stroke-linecap="round"><path d="M5 20V11M12 20V5M19 20v-6"></path></svg>
+              <div style="font-size:10px;color:#6E6A62">Tập</div>
+            </div>
+            <div style="width:56px;height:56px;flex:none;margin:0 4px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:{{ s.ink }};box-shadow:{{ s.glow }}">
+              <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="{{ s.paper }}" stroke-width="2.3" stroke-linecap="round"><path d="M12 5.5v13M5.5 12h13"></path></svg>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6E6A62" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.6c-1.1-1.4-2.6-2-4.1-1.6C5.4 6.6 3.6 9.4 3.6 13c0 4.3 3.4 8 6.1 8 .9 0 1.5-.4 2.3-.4s1.4.4 2.3.4c2.7 0 6.1-3.7 6.1-8 0-3.6-1.8-6.4-4.3-7-1.5-.4-3 .2-4.1 1.6z"></path><path d="M12 7.6V5.2c0-1.5 1.2-2.7 2.7-2.7"></path></svg>
+              <div style="font-size:10px;color:#6E6A62">Dinh dưỡng</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6E6A62" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3.7"></circle><path d="M4.8 20.2c.8-3.8 3.8-5.7 7.2-5.7s6.4 1.9 7.2 5.7"></path></svg>
+              <div style="font-size:10px;color:#6E6A62">Hồ sơ</div>
+            </div>
+          </div>
+
+          <div style="padding:18px;border-radius:24px;border:1px solid rgba(26,25,23,.055);box-shadow:0 1px 1px rgba(26,25,23,.03),0 3px 10px -6px rgba(26,25,23,.07);display:flex;flex-direction:column;gap:15px;background:{{ s.card }}">
+            <div style="display:flex;gap:6px">
+              <div style="display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:7px;font-size:10.5px;font-weight:600;line-height:1;background:{{ s.pBg }};color:{{ s.pTx }}"><span style="opacity:.65;font-weight:500">P</span>32g</div>
+              <div style="display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:7px;font-size:10.5px;font-weight:600;line-height:1;background:{{ s.cBg }};color:{{ s.cTx }}"><span style="opacity:.65;font-weight:500">C</span>54g</div>
+              <div style="display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:7px;font-size:10.5px;font-weight:600;line-height:1;background:{{ s.fBg }};color:{{ s.fTx }}"><span style="opacity:.65;font-weight:500">F</span>9g</div>
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:14px">
+              <div style="font-family:'Instrument Serif',serif;font-size:30px;line-height:1;color:{{ s.ink }}">1,420</div>
+              <div style="font-size:11px;letter-spacing:.08em;color:#A29D94;padding-bottom:4px">/ 2,100 KCAL</div>
+            </div>
+            <div style="display:flex;gap:3px;height:8px">
+              <div style="width:34%;border-radius:99px 4px 4px 99px;background:{{ s.pDot }}"></div>
+              <div style="width:44%;border-radius:4px;background:{{ s.cDot }}"></div>
+              <div style="width:22%;border-radius:4px 99px 99px 4px;background:{{ s.fDot }}"></div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px">
+            <div style="flex:1;height:44px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:600;background:{{ s.ink }};color:{{ s.paper }}">Kết thúc buổi tập</div>
+            <div style="width:110px;height:44px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:600;background:{{ s.tint }};color:{{ s.ink }}">2,100 kcal</div>
+          </div>
+
+          <div style="font-size:12.5px;line-height:1.55;color:#6E6A62">{{ s.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div style="font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#A29D94">A · Màu chủ đạo</div>
+    <div style="display:flex;flex-wrap:wrap;gap:22px">
+      <sc-for list="{{ brands }}" as="b" hint-placeholder-count="4">
+        <div id="{{ b.id }}" style="position:relative;width:466px;padding:30px 24px 24px;border-radius:28px;background:#F5F3EF;border:1px solid rgba(26,25,23,.055);box-shadow:0 1px 1px rgba(26,25,23,.03),0 3px 10px -6px rgba(26,25,23,.07);display:flex;flex-direction:column;gap:18px">
+          <div style="position:absolute;top:-11px;left:18px;padding:3px 9px;border-radius:999px;background:#1A1917;color:#F7F5F1;font-size:10.5px;font-weight:700;letter-spacing:.06em">{{ b.id }}</div>
+
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+            <div>
+              <div style="font-family:'Instrument Serif',serif;font-size:25px;line-height:1.1">{{ b.name }}</div>
+              <div style="font-size:12px;color:#A29D94;margin-top:2px">{{ b.sub }}</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <div style="width:26px;height:26px;border-radius:9px;border:1px solid rgba(26,25,23,.055);background:{{ b.acc }}"></div>
+              <div style="width:26px;height:26px;border-radius:9px;border:1px solid rgba(26,25,23,.055);background:{{ b.tint }}"></div>
+            </div>
+          </div>
+
+          <div style="height:64px;border-radius:32px;background:#FFFFFF;border:1px solid rgba(26,25,23,.055);box-shadow:0 1px 2px rgba(26,25,23,.04),0 10px 30px -12px rgba(26,25,23,.16);display:flex;align-items:center;padding:0 6px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="{{ b.acc }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10.4L12 3.6l8.5 6.8V19a1.6 1.6 0 01-1.6 1.6H5.1A1.6 1.6 0 013.5 19z"></path><path d="M9.6 14.4c1.3 1.4 3.5 1.4 4.8 0"></path></svg>
+              <div style="font-size:10px;font-weight:600;color:{{ b.acc }}">Home</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6E6A62" stroke-width="1.7" stroke-linecap="round"><path d="M5 20V11M12 20V5M19 20v-6"></path></svg>
+              <div style="font-size:10px;color:#6E6A62">Tập</div>
+            </div>
+            <div style="width:56px;height:56px;flex:none;margin:0 4px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:{{ b.acc }};box-shadow:{{ b.glow }}">
+              <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#F7F5F1" stroke-width="2.3" stroke-linecap="round"><path d="M12 5.5v13M5.5 12h13"></path></svg>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6E6A62" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.6c-1.1-1.4-2.6-2-4.1-1.6C5.4 6.6 3.6 9.4 3.6 13c0 4.3 3.4 8 6.1 8 .9 0 1.5-.4 2.3-.4s1.4.4 2.3.4c2.7 0 6.1-3.7 6.1-8 0-3.6-1.8-6.4-4.3-7-1.5-.4-3 .2-4.1 1.6z"></path><path d="M12 7.6V5.2c0-1.5 1.2-2.7 2.7-2.7"></path></svg>
+              <div style="font-size:10px;color:#6E6A62">Dinh dưỡng</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6E6A62" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3.7"></circle><path d="M4.8 20.2c.8-3.8 3.8-5.7 7.2-5.7s6.4 1.9 7.2 5.7"></path></svg>
+              <div style="font-size:10px;color:#6E6A62">Hồ sơ</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px">
+            <div style="flex:1;height:44px;border-radius:16px;color:#F7F5F1;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:600;background:{{ b.acc }}">Kết thúc buổi tập</div>
+            <div style="width:110px;height:44px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:600;background:{{ b.tint }};color:{{ b.acc }}">2,100 kcal</div>
+          </div>
+
+          <div style="font-size:12.5px;line-height:1.55;color:#6E6A62">{{ b.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div style="font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#A29D94">B · Bảng macro</div>
+    <div style="display:flex;flex-wrap:wrap;gap:22px">
+      <sc-for list="{{ palettes }}" as="p" hint-placeholder-count="3">
+        <div id="{{ p.id }}" style="position:relative;width:466px;padding:30px 24px 24px;border-radius:28px;background:#F5F3EF;border:1px solid rgba(26,25,23,.055);box-shadow:0 1px 1px rgba(26,25,23,.03),0 3px 10px -6px rgba(26,25,23,.07);display:flex;flex-direction:column;gap:18px">
+          <div style="position:absolute;top:-11px;left:18px;padding:3px 9px;border-radius:999px;background:#1A1917;color:#F7F5F1;font-size:10.5px;font-weight:700;letter-spacing:.06em">{{ p.id }}</div>
+
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+            <div>
+              <div style="font-family:'Instrument Serif',serif;font-size:25px;line-height:1.1">{{ p.name }}</div>
+              <div style="font-size:12px;color:#A29D94;margin-top:2px">{{ p.sub }}</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <div style="width:26px;height:26px;border-radius:9px;border:1px solid rgba(26,25,23,.055);background:{{ p.pDot }}"></div>
+              <div style="width:26px;height:26px;border-radius:9px;border:1px solid rgba(26,25,23,.055);background:{{ p.cDot }}"></div>
+              <div style="width:26px;height:26px;border-radius:9px;border:1px solid rgba(26,25,23,.055);background:{{ p.fDot }}"></div>
+            </div>
+          </div>
+
+          <div style="padding:18px;border-radius:24px;background:#FFFFFF;border:1px solid rgba(26,25,23,.055);box-shadow:0 1px 1px rgba(26,25,23,.03),0 3px 10px -6px rgba(26,25,23,.07);display:flex;flex-direction:column;gap:15px">
+            <div style="display:flex;gap:6px">
+              <div style="display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:7px;font-size:10.5px;font-weight:600;line-height:1;background:{{ p.pBg }};color:{{ p.pTx }}"><span style="opacity:.65;font-weight:500">P</span>32g</div>
+              <div style="display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:7px;font-size:10.5px;font-weight:600;line-height:1;background:{{ p.cBg }};color:{{ p.cTx }}"><span style="opacity:.65;font-weight:500">C</span>54g</div>
+              <div style="display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:7px;font-size:10.5px;font-weight:600;line-height:1;background:{{ p.fBg }};color:{{ p.fTx }}"><span style="opacity:.65;font-weight:500">F</span>9g</div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;font-size:12px">
+                <span style="display:flex;align-items:center;gap:6px;color:#6E6A62"><span style="width:7px;height:7px;border-radius:2px;background:{{ p.pDot }}"></span>Đạm</span>
+                <span style="font-weight:600">96g</span>
+              </div>
+              <div style="height:6px;border-radius:99px;background:rgba(26,25,23,.07)"><div style="width:69%;height:6px;border-radius:99px;background:{{ p.pDot }}"></div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;font-size:12px">
+                <span style="display:flex;align-items:center;gap:6px;color:#6E6A62"><span style="width:7px;height:7px;border-radius:2px;background:{{ p.cDot }}"></span>Tinh bột</span>
+                <span style="font-weight:600">154g</span>
+              </div>
+              <div style="height:6px;border-radius:99px;background:rgba(26,25,23,.07)"><div style="width:67%;height:6px;border-radius:99px;background:{{ p.cDot }}"></div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;font-size:12px">
+                <span style="display:flex;align-items:center;gap:6px;color:#6E6A62"><span style="width:7px;height:7px;border-radius:2px;background:{{ p.fDot }}"></span>Chất béo</span>
+                <span style="font-weight:600">41g</span>
+              </div>
+              <div style="height:6px;border-radius:99px;background:rgba(26,25,23,.07)"><div style="width:66%;height:6px;border-radius:99px;background:{{ p.fDot }}"></div></div>
+            </div>
+          </div>
+
+          <div style="font-size:12.5px;line-height:1.55;color:#6E6A62">{{ p.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:1400}}">
+class Component extends DCLogic {
+  renderVals() {
+    const brands = [
+      { id: '1a', name: 'Jade', sub: 'Ngọc lục tươi · #0E6B58', acc: '#0E6B58', tint: '#E4EFEA',
+        glow: '0 4px 14px -6px rgba(14,107,88,.55)',
+        note: 'Sáng và sống hơn pine hiện tại. Đọc ra “sức khoẻ” ngay mà không bị mềm như mint.' },
+      { id: '1b', name: 'Ink Cobalt', sub: 'Xanh mực · #28407F', acc: '#28407F', tint: '#E5E9F2',
+        glow: '0 4px 14px -6px rgba(40,64,127,.55)',
+        note: 'Sang nhất, gần ngôn ngữ fintech cao cấp. Trung tính với ba màu macro nên chúng nổi hơn.' },
+      { id: '1c', name: 'Clay', sub: 'Đất nung · #B0503A', acc: '#B0503A', tint: '#F6E7E1',
+        glow: '0 4px 14px -6px rgba(176,80,58,.55)',
+        note: 'Ấm và thân thiện nhất. Rủi ro: gần màu Đạm nên phải đẩy Đạm sang hồng san hô.' },
+      { id: '1d', name: 'Plum', sub: 'Mận chín · #5A2D4C', acc: '#5A2D4C', tint: '#EFE5EC',
+        glow: '0 4px 14px -6px rgba(90,45,76,.55)',
+        note: 'Lạ và cao cấp, ít app fitness dùng nên dễ nhớ mặt. Nhưng ít “thể thao” nhất.' },
+    ];
+
+    const palettes = [
+      { id: '2a', name: 'Muted earth', sub: 'Đất trầm — bảng hiện tại',
+        pDot: '#B4694C', pBg: '#F6E8E2', pTx: '#93513A',
+        cDot: '#A88434', cBg: '#F4EEDC', cTx: '#836526',
+        fDot: '#6E8560', fBg: '#E8EEE4', fTx: '#4F6144',
+        note: 'Rất hợp nền be, nhưng ở chip 10px thì ba màu gần như một sắc — khó đọc nhanh.' },
+      { id: '2b', name: 'Warm signal', sub: 'Tín hiệu ấm',
+        pDot: '#D2452F', pBg: '#FBE6E1', pTx: '#9E2E1D',
+        cDot: '#D18B12', cBg: '#FBEFD8', cTx: '#8F5B06',
+        fDot: '#4E8F6B', fBg: '#E2F0E8', fTx: '#2F6247',
+        note: 'Đậm hơn một bậc, giữ nguyên gốc đất. Phân biệt rõ ở cỡ nhỏ mà chưa chói.' },
+      { id: '2c', name: 'Editorial trio', sub: 'Ba màu tạp chí',
+        pDot: '#E2513F', pBg: '#FCE7E3', pTx: '#A83221',
+        cDot: '#E0A020', cBg: '#FCF0DA', cTx: '#8F600A',
+        fDot: '#3D6BB5', fBg: '#E5EBF6', fTx: '#2A4C86',
+        note: 'Colorful nhất: san hô / hổ phách / xanh chàm. Ba hướng màu khác nhau nên đọc nhanh nhất.' },
+    ];
+
+    const systems = [
+      { id: '3a', name: 'Ink & Pigment', sub: 'Mực rừng sâu + ba pigment cùng L·C',
+        paper: '#F4F1EC', card: '#FFFFFF', ink: '#16231E', tint: '#E7EAE7',
+        glow: '0 4px 14px -6px rgba(22,35,30,.4)',
+        pDot: '#A9573F', pBg: '#F4E7E1', pTx: '#8A4530',
+        cDot: '#9A7A33', cBg: '#F3EDDD', cTx: '#7C6126',
+        fDot: '#4C7286', fBg: '#E5EBEF', fTx: '#3B5A6B',
+        note: 'Mực xanh rừng gần đen làm màu chủ đạo — nút action im lặng, không giành sự chú ý. Ba pigment đất/hoàng thổ/xanh đá cùng độ sáng nên nhìn ra ngay ba thứ khác nhau mà không màu nào nhảy lên. Đây là hệ tui chọn.' },
+      { id: '3b', name: 'Graphite & Bronze', sub: 'Chì ấm + đồng thau, lạnh hơn một bậc',
+        paper: '#F2F1EE', card: '#FFFFFF', ink: '#22201D', tint: '#E9E7E2',
+        glow: '0 4px 14px -6px rgba(34,32,29,.4)',
+        pDot: '#9E5B4E', pBg: '#F2E6E3', pTx: '#7F4539',
+        cDot: '#94793C', cBg: '#F1EDE0', cTx: '#755E2A',
+        fDot: '#5A6E7E', fBg: '#E8EAEE', fTx: '#455563',
+        note: 'Trung tính hoàn toàn, không sắc xanh — gần Apple nhất, nhưng cũng dễ trở nên vô danh. Chọn hệ này nếu b muốn app tuyệt đối không có “màu thương hiệu”.' },
+    ];
+
+    return { brands, palettes, systems };
+  }
+}
+</script>
+</body>
+</html>

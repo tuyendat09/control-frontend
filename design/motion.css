@@ -1,0 +1,82 @@
+/* Control — motion reference. Extracted verbatim from Calo App.dc.html.
+   Keyframes ending in "a"/"b" (hopa/hopb…) are identical twins used only to retrigger CSS animations on re-tap; implement once. */
+
+/* ===== KEYFRAMES ===== */
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes sheetslide{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sheetup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes srow{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes hopa{0%{transform:translateY(0) scale(1)}30%{transform:translateY(-4px) scale(1.16)}55%{transform:translateY(1px) scale(.97)}75%{transform:translateY(-1px) scale(1.03)}100%{transform:translateY(0) scale(1)}}
+@keyframes bara{0%{transform:scaleY(1)}35%{transform:scaleY(.45)}70%{transform:scaleY(1.14)}100%{transform:scaleY(1)}}
+@keyframes woba{0%{transform:rotate(0)}20%{transform:rotate(-11deg) scale(1.08)}45%{transform:rotate(8deg) scale(1.05)}68%{transform:rotate(-4deg)}86%{transform:rotate(2deg)}100%{transform:rotate(0)}}
+@keyframes mepa{0%{transform:scale(1)}35%{transform:scale(1.17)}62%{transform:scale(.98)}100%{transform:scale(1)}}
+@keyframes panea{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes orbit{to{transform:rotate(360deg)}}
+@keyframes sonar{0%{transform:scale(.66);opacity:0}18%{opacity:.3}100%{transform:scale(1.5);opacity:0}}
+@keyframes drift{0%,100%{transform:translate(-14%,-6%) scale(1)}50%{transform:translate(12%,8%) scale(1.14)}}
+@keyframes upin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tickpop{0%{transform:scale(.3);opacity:0}55%{transform:scale(1.22);opacity:1}100%{transform:scale(1)}}
+@keyframes ringin{from{stroke-dashoffset:320.4}}
+@keyframes barin{from{transform:scaleX(0)}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes lockpop{0%{transform:scale(1)}40%{transform:scale(.94)}100%{transform:scale(1)}}
+@keyframes sline{from{top:8%}to{top:92%}}
+@keyframes toastin{0%{opacity:0;transform:translate(-50%,12px)}12%{opacity:1;transform:translate(-50%,0)}80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-6px)}}
+
+/* ===== WHERE THEY ARE APPLIED (selectors = prototype state hooks) ===== */
+[data-tab]{transition:color .2s ease,transform .18s cubic-bezier(.2,.8,.2,1)}
+[data-plus]{transition:transform .38s cubic-bezier(.34,1.4,.64,1)}
+[data-srow]{animation:srow .42s cubic-bezier(.2,.8,.2,1) backwards}
+[data-srow="1"]{animation-delay:.04s}
+[data-srow="2"]{animation-delay:.09s}
+[data-srow="3"]{animation-delay:.14s}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;animation-iteration-count:1 !important}}
+[data-nk="a"] [data-screen="dash"] [data-tab="dash"] [data-ico]{animation:hopa .52s cubic-bezier(.34,1.56,.64,1)}
+[data-nk="a"] [data-screen="stats"] [data-tab="stats"] [data-ico]{animation:mepa .46s cubic-bezier(.34,1.56,.64,1)}
+[data-nk="a"] [data-screen="food"] [data-tab="food"] [data-ico]{animation:woba .62s cubic-bezier(.36,.8,.4,1)}
+[data-nk="a"] [data-screen="work"] [data-tab="work"] [data-bar]{animation:bara .5s cubic-bezier(.34,1.5,.64,1)}
+[data-nk="a"] [data-screen="work"] [data-tab="work"] [data-bar="2"]{animation-delay:.06s}
+[data-nk="a"] [data-screen="work"] [data-tab="work"] [data-bar="3"]{animation-delay:.12s}
+[data-nk="a"] [data-pane]{animation:panea .34s cubic-bezier(.2,.8,.2,1)}
+[data-nk="b"] [data-screen="dash"] [data-tab="dash"] [data-ico]{animation:hopb .52s cubic-bezier(.34,1.56,.64,1)}
+[data-nk="b"] [data-screen="stats"] [data-tab="stats"] [data-ico]{animation:mepb .46s cubic-bezier(.34,1.56,.64,1)}
+[data-nk="b"] [data-screen="food"] [data-tab="food"] [data-ico]{animation:wobb .62s cubic-bezier(.36,.8,.4,1)}
+[data-nk="b"] [data-screen="work"] [data-tab="work"] [data-bar]{animation:barb .5s cubic-bezier(.34,1.5,.64,1)}
+[data-nk="b"] [data-screen="work"] [data-tab="work"] [data-bar="2"]{animation-delay:.06s}
+[data-nk="b"] [data-screen="work"] [data-tab="work"] [data-bar="3"]{animation-delay:.12s}
+[data-nk="b"] [data-pane]{animation:paneb .34s cubic-bezier(.2,.8,.2,1)}
+[data-up]{animation:upin .7s cubic-bezier(.2,.8,.2,1) backwards}
+[data-up="1"]{animation-delay:.05s}
+[data-up="2"]{animation-delay:.14s}
+[data-up="3"]{animation-delay:.23s}
+[data-up="4"]{animation-delay:.32s}
+[data-up="5"]{animation-delay:.41s}
+[data-markwrap]{position:absolute;transition:top .66s cubic-bezier(.22,1,.36,1),left .66s cubic-bezier(.22,1,.36,1),width .66s cubic-bezier(.22,1,.36,1),height .66s cubic-bezier(.22,1,.36,1),transform .66s cubic-bezier(.22,1,.36,1)}
+[data-wordmark]{position:absolute;font-family:'Instrument Serif',serif;line-height:1;letter-spacing:-.022em;white-space:nowrap;transition:top .66s cubic-bezier(.22,1,.36,1),left .66s cubic-bezier(.22,1,.36,1),font-size .66s cubic-bezier(.22,1,.36,1),transform .66s cubic-bezier(.22,1,.36,1)}
+[data-sonar]{transition:opacity .45s ease}
+[data-block]{position:absolute;left:0;right:0;transition:opacity .42s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+[data-fi]{transition:opacity .5s ease,transform .58s cubic-bezier(.22,1,.36,1)}
+[data-astage="form"] [data-fi="1"]{transition-delay:.20s}
+[data-astage="form"] [data-fi="2"]{transition-delay:.27s}
+[data-astage="form"] [data-fi="3"]{transition-delay:.34s}
+[data-astage="form"] [data-fi="4"]{transition-delay:.41s}
+[data-back]{transition:opacity .4s ease,transform .5s cubic-bezier(.22,1,.36,1)}
+[data-amb]{position:absolute;inset:0;pointer-events:none;z-index:0;transition:opacity .45s ease}
+[data-grain]{position:absolute;inset:0;pointer-events:none;z-index:1;opacity:var(--grain);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");background-size:140px 140px;mix-blend-mode:overlay;transition:opacity .45s ease}
+[data-seg]{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 6px);border-radius:12px;background:var(--surf2);box-shadow:var(--el);transition:transform .34s cubic-bezier(.32,1.4,.5,1)}
+[data-s3="1"] [data-s="3"] [data-tick],[data-s4="1"] [data-s="4"] [data-tick]{display:flex;animation:tickpop .42s cubic-bezier(.34,1.6,.64,1)}
+[data-ring]{animation:ringin 1.15s cubic-bezier(.2,.85,.3,1) backwards}
+[data-mbar]{transform-origin:0 50%;animation:barin .8s cubic-bezier(.2,.85,.3,1) backwards}
+[data-mbar="2"]{animation-delay:.07s}
+[data-mbar="3"]{animation-delay:.14s}
+[data-srow="4"]{animation-delay:.19s}
+[data-scan]{animation:fadein .28s ease}
+[data-vf]{transition:width .5s cubic-bezier(.22,1,.36,1),height .5s cubic-bezier(.22,1,.36,1),transform .5s cubic-bezier(.22,1,.36,1)}
+[data-corner]{transition:border-color .3s ease}
+[data-scan="found"] [data-vfo]{animation:lockpop .5s cubic-bezier(.34,1.56,.64,1)}
+[data-sline]{animation:sline 1.7s cubic-bezier(.45,0,.55,1) infinite alternate;transition:opacity .2s ease}
+[data-scan="found"] [data-sline]{opacity:0;animation-play-state:paused}
+[data-seg="s"]{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 6px);border-radius:12px;background:#F4F1EC;transition:transform .34s cubic-bezier(.32,1.4,.5,1)}
+[data-sctl]{transition:opacity .3s ease,transform .4s cubic-bezier(.22,1,.36,1)}
+[data-sres]{transform:translateY(104%);transition:transform .55s cubic-bezier(.22,1,.36,1)}
+[data-cam]{transform-origin:50% 300px;transition:filter .3s ease,transform .5s cubic-bezier(.22,1,.36,1)}

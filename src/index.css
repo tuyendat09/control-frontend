@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+/* ───────── Design tokens (Control) ───────── */
+:root {
+  --bg: #e7e4de;
+  --surf: #f4f1ec;
+  --surf2: #ffffff;
+  --line: rgba(26, 25, 23, 0.055);
+  --line2: rgba(26, 25, 23, 0.045);
+  --lineHi: rgba(26, 25, 23, 0.16);
+  --tx: #16231e;
+  --tx2: #67655f;
+  --tx3: #a09c94;
+  --acc: #16231e;
+  --accTx: #f4f1ec;
+  --tint: #e7eae7;
+  --shadow: 0 1px 1px rgba(26, 25, 23, 0.035), 0 4px 14px -8px rgba(26, 25, 23, 0.1);
+  --el: 0 1px 1px rgba(26, 25, 23, 0.03), 0 3px 10px -6px rgba(26, 25, 23, 0.07);
+  --tabbar: 0 1px 2px rgba(26, 25, 23, 0.04), 0 10px 30px -12px rgba(26, 25, 23, 0.16);
+  --amb1: rgba(0, 0, 0, 0);
+  --amb2: rgba(0, 0, 0, 0);
+  --grain: 0;
+  --accGlow: rgba(22, 35, 30, 0.4);
+  --pBg: #f4e7e1;
+  --pTx: #8a4530;
+  --pDot: #a9573f;
+  --cBg: #f3eddd;
+  --cTx: #7c6126;
+  --cDot: #9a7a33;
+  --fBg: #e5ebef;
+  --fTx: #3b5a6b;
+  --fDot: #4c7286;
+}
+
+[data-theme="dark"] {
+  --bg: #070908;
+  --surf: #101413;
+  --surf2: #19201d;
+  --line: rgba(255, 255, 255, 0.055);
+  --line2: rgba(255, 255, 255, 0.04);
+  --lineHi: rgba(255, 255, 255, 0.18);
+  --tx: #efeee9;
+  --tx2: #9b9993;
+  --tx3: #66645e;
+  --acc: #dde4df;
+  --accTx: #16231e;
+  --tint: #242a27;
+  --shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 4px 14px -8px rgba(0, 0, 0, 0.5);
+  --el: inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 1px 1px rgba(0, 0, 0, 0.3),
+    0 6px 18px -10px rgba(0, 0, 0, 0.6);
+  --amb1: rgba(150, 196, 175, 0.13);
+  --amb2: rgba(196, 169, 106, 0.07);
+  --grain: 0.05;
+  --accGlow: rgba(0, 0, 0, 0.55);
+  --pBg: #2a1e19;
+  --pTx: #d2937a;
+  --pDot: #b96a4e;
+  --cBg: #282418;
+  --cTx: #c4a96a;
+  --cDot: #ac8b41;
+  --fBg: #1b2429;
+  --fTx: #93aebe;
+  --fDot: #5e839a;
+}
+
+/* ───────── Tailwind theme bridge ───────── */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surf: var(--surf);
+  --color-surf2: var(--surf2);
+  --color-tint: var(--tint);
+  --color-line: var(--line);
+  --color-line2: var(--line2);
+  --color-line-hi: var(--lineHi);
+  --color-tx: var(--tx);
+  --color-tx2: var(--tx2);
+  --color-tx3: var(--tx3);
+  --color-acc: var(--acc);
+  --color-acc-tx: var(--accTx);
+  --color-p-bg: var(--pBg);
+  --color-p-tx: var(--pTx);
+  --color-p-dot: var(--pDot);
+  --color-c-bg: var(--cBg);
+  --color-c-tx: var(--cTx);
+  --color-c-dot: var(--cDot);
+  --color-f-bg: var(--fBg);
+  --color-f-tx: var(--fTx);
+  --color-f-dot: var(--fDot);
+  --shadow-el: var(--el);
+  --shadow-hero: var(--shadow);
+  --shadow-glow: 0 4px 14px -6px var(--accGlow);
+  --shadow-tabbar: var(--tabbar);
+}
+
+@theme {
+  --font-sans: "Instrument Sans", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", serif;
+
+  /* Named curves (MOTION.md) */
+  --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring-hard: cubic-bezier(0.34, 1.6, 0.64, 1);
+  --ease-spring-soft: cubic-bezier(0.32, 1.4, 0.5, 1);
+  --ease-plus: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --ease-draw: cubic-bezier(0.2, 0.85, 0.3, 1);
+
+  --animate-fadein: fadein 0.22s ease;
+  --animate-fadein-slow: fadein 0.28s ease;
+  --animate-sheet: sheetslide 0.3s var(--ease-soft);
+  --animate-sheetup: sheetup 0.3s var(--ease-soft);
+  --animate-srow: srow 0.42s var(--ease-soft) backwards;
+  --animate-pane: panea 0.34s var(--ease-soft);
+  --animate-rise: rise 0.3s var(--ease-soft);
+  --animate-upin: upin 0.7s var(--ease-soft) backwards;
+  --animate-fi: fiin 0.58s var(--ease-expo) backwards;
+  --animate-orbit: orbit 18s linear infinite;
+  --animate-sonar: sonar 4.2s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+  --animate-drift: drift 24s cubic-bezier(0.4, 0, 0.4, 1) infinite;
+  --animate-tickpop: tickpop 0.42s var(--ease-spring-hard);
+  --animate-ring: ringin 1.15s var(--ease-draw) backwards;
+  --animate-mbar: barin 0.8s var(--ease-draw) backwards;
+  --animate-lockpop: lockpop 0.5s var(--ease-spring);
+  --animate-sline: sline 1.7s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  --animate-toast: toastin 2.2s ease forwards;
+  --animate-stage-out-up: stageoutup 0.45s var(--ease-expo) forwards;
+  --animate-stage-out-down: stageoutdown 0.45s var(--ease-expo) forwards;
+  --animate-tab-hop: hop 0.52s var(--ease-spring);
+  --animate-tab-pop: pop 0.46s var(--ease-spring);
+  --animate-tab-wobble: wobble 0.62s cubic-bezier(0.36, 0.8, 0.4, 1);
+  --animate-tab-bar: trainbar 0.5s cubic-bezier(0.34, 1.5, 0.64, 1);
+}
+
+/* ───────── Keyframes ───────── */
+@keyframes fadein { from { opacity: 0 } to { opacity: 1 } }
+@keyframes sheetslide { from { opacity: 0; transform: translateY(26px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes sheetup { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes srow { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes panea { from { opacity: 0; transform: translateY(7px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes rise { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes upin { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes fiin { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes orbit { to { transform: rotate(360deg) } }
+@keyframes sonar { 0% { transform: scale(.66); opacity: 0 } 18% { opacity: .3 } 100% { transform: scale(1.5); opacity: 0 } }
+@keyframes drift { 0%, 100% { transform: translate(-14%, -6%) scale(1) } 50% { transform: translate(12%, 8%) scale(1.14) } }
+@keyframes tickpop { 0% { transform: scale(.3); opacity: 0 } 55% { transform: scale(1.22); opacity: 1 } 100% { transform: scale(1) } }
+@keyframes ringin { from { stroke-dashoffset: 320.4 } }
+@keyframes barin { from { transform: scaleX(0) } }
+@keyframes lockpop { 0% { transform: scale(1) } 40% { transform: scale(.94) } 100% { transform: scale(1) } }
+@keyframes sline { from { top: 8% } to { top: 92% } }
+@keyframes toastin {
+  0% { opacity: 0; transform: translate(-50%, 12px) }
+  12% { opacity: 1; transform: translate(-50%, 0) }
+  80% { opacity: 1; transform: translate(-50%, 0) }
+  100% { opacity: 0; transform: translate(-50%, -6px) }
+}
+@keyframes stageoutup { to { opacity: 0; transform: translateY(-18px) } }
+@keyframes stageoutdown { to { opacity: 0; transform: translateY(20px) } }
+@keyframes hop {
+  0% { transform: translateY(0) scale(1) }
+  30% { transform: translateY(-4px) scale(1.16) }
+  55% { transform: translateY(1px) scale(.97) }
+  75% { transform: translateY(-1px) scale(1.03) }
+  100% { transform: translateY(0) scale(1) }
+}
+@keyframes pop { 0% { transform: scale(1) } 35% { transform: scale(1.17) } 62% { transform: scale(.98) } 100% { transform: scale(1) } }
+@keyframes wobble {
+  0% { transform: rotate(0) }
+  20% { transform: rotate(-11deg) scale(1.08) }
+  45% { transform: rotate(8deg) scale(1.05) }
+  68% { transform: rotate(-4deg) }
+  86% { transform: rotate(2deg) }
+  100% { transform: rotate(0) }
+}
+@keyframes trainbar { 0% { transform: scaleY(1) } 35% { transform: scaleY(.45) } 70% { transform: scaleY(1.14) } 100% { transform: scaleY(1) } }
+
+/* ───────── Base ───────── */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--font-sans);
+  line-height: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-wrap: pretty;
+  transition: background 0.35s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
