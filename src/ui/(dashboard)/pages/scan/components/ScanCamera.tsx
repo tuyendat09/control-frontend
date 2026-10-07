@@ -3,7 +3,7 @@ import type { ScanMode } from '@/data/scan'
 /** Fake camera feed: dim room, a blurred package, and the printed code. */
 export function ScanCamera({ mode }: { mode: ScanMode }) {
   return (
-    <div className="absolute inset-0 origin-[50%_300px] bg-[radial-gradient(90%_60%_at_50%_40%,#2B302D_0%,#141816_55%,#0A0C0B_100%)] transition-[filter] duration-300 group-data-[flash=true]/scan:brightness-[1.45] group-data-[flash=true]/scan:saturate-[1.1] group-data-[state=found]/scan:-translate-y-[92px] group-data-[state=found]/scan:scale-[.86] [transition:filter_.3s_ease,translate_.5s_var(--ease-expo),scale_.5s_var(--ease-expo)]">
+    <div data-scan-cam className="absolute inset-0 bg-[radial-gradient(90%_60%_at_50%_40%,#2B302D_0%,#141816_55%,#0A0C0B_100%)]">
       <div className="absolute top-[300px] left-1/2 -ml-[125px] h-[330px] w-[250px] -rotate-6 rounded-[42px] bg-[linear-gradient(160deg,#EDEAE3_0%,#BDB8AE_100%)] opacity-[.18] blur-[18px]" />
       {mode === 'bar' ? <MockBarcode /> : <MockQr />}
     </div>

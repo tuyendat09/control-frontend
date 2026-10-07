@@ -10,7 +10,7 @@ export function WelcomeActions() {
   const { installed, install } = useInstallApp()
 
   return (
-    <div className="absolute inset-x-0 bottom-11 flex animate-upin flex-col gap-[14px] px-8 [animation-delay:.41s]">
+    <div data-up="3" className="absolute inset-x-0 bottom-11 flex flex-col gap-[14px] px-8">
       <Button glow onClick={() => navigate('/auth/register')}>
         {t('Bắt đầu', 'Get started')}
         <ArrowRightIcon size={16} />

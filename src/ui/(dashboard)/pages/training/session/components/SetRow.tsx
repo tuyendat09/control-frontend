@@ -2,6 +2,7 @@ import { cn } from '@/lib/cn'
 import { fmtNum } from '@/lib/format'
 import type { SetLog } from '@/types'
 import { CheckIcon } from '@/ui/shared/components/Icons'
+import { useAnimationCheck } from '@/ui/shared/hooks/useAnimationCheck'
 import { useT } from '@/ui/shared/hooks/useT'
 import { setGrid } from './setGrid'
 
@@ -18,6 +19,7 @@ interface SetRowProps {
 
 export function SetRow({ index, set, status, ghost, readOnly, onToggle }: SetRowProps) {
   const t = useT()
+  const { tickRef, boxRef } = useAnimationCheck(set.done)
   const value = cn('text-center', status === 'active' ? 'font-semibold' : status === 'done' ? 'font-medium' : 'font-normal')
 
   return (
@@ -46,21 +48,17 @@ export function SetRow({ index, set, status, ghost, readOnly, onToggle }: SetRow
           aria-label={t(`Set ${index} hoàn thành`, `Set ${index} done`)}
           disabled={readOnly}
           onClick={onToggle}
-          className="-m-[3px] flex size-[26px] items-center justify-center disabled:cursor-default"
+          className="group/check relative -m-[3px] flex size-[26px] items-center justify-center disabled:cursor-default"
         >
-          {set.done ? (
-            <span className="flex animate-tickpop items-center justify-center text-acc">
-              <CheckIcon size={17} strokeWidth={2.4} />
-            </span>
-          ) : (
-            <span
-              className={cn(
-                'size-5 rounded-[6px] border-[1.5px] transition-all duration-[180ms]',
-                status === 'active' ? 'border-tx3' : 'border-line',
-                !readOnly && 'hover:border-tx hover:bg-surf',
-              )}
-            />
-          )}
+          <span ref={boxRef} className={cn(
+              'absolute size-5 rounded-[6px] border-[1.5px] transition-colors duration-[180ms]',
+              status === 'active' ? 'border-tx3' : 'border-line',
+              !readOnly && 'group-hover/check:border-tx group-hover/check:bg-surf',
+            )}
+          />
+          <span ref={tickRef} className="flex items-center justify-center text-acc opacity-0">
+            <CheckIcon size={17} strokeWidth={2.4} />
+          </span>
         </button>
       </div>
     </div>

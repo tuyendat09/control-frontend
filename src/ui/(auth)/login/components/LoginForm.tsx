@@ -5,14 +5,16 @@ import { Input } from '@/ui/shared/components/Input'
 import { useT } from '@/ui/shared/hooks/useT'
 import { AuthHeading } from '../../components/AuthHeading'
 import { AuthSwitch } from '../../components/AuthSwitch'
+import { useAnimationAuthForm } from '../../hooks/useAnimationAuthForm'
 import { useLoginForm } from '../hooks/useLoginForm'
 
 export function LoginForm() {
   const t = useT()
   const { values, setField, onSubmit } = useLoginForm()
+  const scope = useAnimationAuthForm()
 
   return (
-    <>
+    <div ref={scope} className="contents">
       <form onSubmit={onSubmit} className="absolute inset-x-0 top-[158px] flex flex-col px-8">
         <AuthHeading
           title={t('Chào mừng trở lại', 'Welcome back')}
@@ -20,16 +22,18 @@ export function LoginForm() {
         />
 
         <div className="flex flex-col gap-3">
-          <Input
-            label="Email"
-            type="email"
-            autoComplete="email"
-            inputMode="email"
-            placeholder="an.nguyen@gmail.com"
-            value={values.email}
-            onChange={setField('email')}
-            className="animate-fi [animation-delay:.27s]"
-          />
+          <div data-fi="2">
+            <Input
+              label="Email"
+              type="email"
+              autoComplete="email"
+              inputMode="email"
+              placeholder="an.nguyen@gmail.com"
+              value={values.email}
+              onChange={setField('email')}
+            />
+          </div>
+          <div data-fi="3">
           <Input
             label={t('Mật khẩu', 'Password')}
             type="password"
@@ -37,16 +41,16 @@ export function LoginForm() {
             placeholder="••••••••"
             value={values.password}
             onChange={setField('password')}
-            className="animate-fi [animation-delay:.34s]"
             labelAction={
               <Link to="/auth/login" className="text-[11.5px] text-tx3 transition-colors duration-200 hover:text-tx">
                 {t('Quên?', 'Forgot?')}
               </Link>
             }
           />
+          </div>
         </div>
 
-        <Button type="submit" glow className="mt-[26px] animate-fi [animation-delay:.41s]">
+        <Button type="submit" glow data-fi="4" className="mt-[26px]">
           {t('Đăng nhập', 'Sign in')}
           <ArrowRightIcon size={16} />
         </Button>
@@ -57,6 +61,6 @@ export function LoginForm() {
         to="/auth/register"
         linkLabel={t('Đăng ký', 'Sign up')}
       />
-    </>
+    </div>
   )
 }

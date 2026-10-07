@@ -12,7 +12,7 @@ export function Logo({ className, orbit = false }: LogoProps) {
     <svg viewBox="0 0 40 40" fill="none" className={cn('size-full', className)} aria-hidden="true">
       <circle cx="20" cy="20" r="15" stroke="var(--acc)" strokeWidth="2.2" />
       {orbit ? (
-        <g className="animate-orbit" style={{ transformOrigin: '20px 20px' }}>
+        <g data-orbit>
           <circle cx="20" cy="12.5" r="3.4" fill="var(--acc)" />
         </g>
       ) : (

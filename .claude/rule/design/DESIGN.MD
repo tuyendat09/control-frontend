@@ -163,15 +163,16 @@ All live in `src/ui/shared/components`; page-specific ones live in each page's `
 
 ## Motion
 
-Named curves (Tailwind `ease-*`): `soft` (.2,.8,.2,1) panes, sheets, presses · `expo` (.22,1,.36,1) auth, scan · `spring` (.34,1.56,.64,1) tab icons, lock · `spring-hard` set tick · `spring-soft` segmented · `plus` rotation · `draw` ring and bars.
+Motion is GSAP (hooks `useAnimationXxx`, setup in `src/lib/motion.ts`); route changes use the View Transitions API. Named curves (GSAP names in `lib/motion.ts`, Tailwind `ease-*` for CSS transitions): `soft` (.2,.8,.2,1) panes, sheets, presses · `expo` (.22,1,.36,1) auth, scan · `spring` (.34,1.56,.64,1) tab icons, lock · `spring-hard` set tick · `spring-soft` segmented · `plus` rotation · `draw` ring and bars.
 
 | Moment | Motion |
 |---|---|
-| Tab change | pane fades up 7px (.34s); active icon plays its own spring |
+| Tab change | route view-transition (placeholder cross-fade); active icon plays its own spring; pressing/holding the bar lifts it, release springs back (elastic) |
 | Press | scale .9–.98, 160–180 ms |
 | Welcome → form | logo + wordmark glide via `transform` only (.66s expo); welcome fades up, form groups stagger in at .20 / .27 / .34 / .41 s |
 | Home entry | ring draws 1.15s; macro bars 0.8s, 70 ms apart |
 | Set tick | check pops (.42s) and the rest timer restarts at 2:00 |
+| Sheets | scrim + panel + rows in; the same timeline reverses to close |
 | Toast | 2.2s: in 12 %, hold, out |
 
 `prefers-reduced-motion` collapses all animation durations to ~0.

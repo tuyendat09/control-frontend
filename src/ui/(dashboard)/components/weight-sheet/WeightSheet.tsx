@@ -11,8 +11,27 @@ import { RecentWeights } from './RecentWeights'
 import { WeightJumpChips } from './WeightJumpChips'
 import { WeightStepper } from './WeightStepper'
 
-/** Today's weight entry. Mounted only while open, so the draft always starts from the latest value. */
+/** Today's weight entry. */
 export function WeightSheet() {
+  const t = useT()
+  const { weightOpen, closeWeight } = useDashboardUi()
+
+  return (
+    <Sheet
+      open={weightOpen}
+      onClose={closeWeight}
+      zIndex="z-[24]"
+      scrimClassName="bg-[rgba(12,16,14,.44)]"
+      className="px-5"
+      label={t('Cân nặng hôm nay', 'Today’s weight')}
+    >
+      <WeightSheetBody />
+    </Sheet>
+  )
+}
+
+/** Mounted only while the sheet is, so the draft always starts from the latest value. */
+function WeightSheetBody() {
   const t = useT()
   const { lang } = usePreferences()
   const { closeWeight } = useDashboardUi()
@@ -20,13 +39,7 @@ export function WeightSheet() {
   const draft = useWeightDraft(closeWeight)
 
   return (
-    <Sheet
-      onClose={closeWeight}
-      zIndex="z-[24]"
-      scrimClassName="bg-[rgba(12,16,14,.44)]"
-      className="px-5"
-      label={t('Cân nặng hôm nay', 'Today’s weight')}
-    >
+    <>
       <div className="flex items-baseline justify-between gap-3">
         <div>
           <h2 className="m-0 font-serif text-[23px] leading-[1.1] font-normal">{t('Cân nặng hôm nay', 'Today’s weight')}</h2>
@@ -54,6 +67,6 @@ export function WeightSheet() {
         <CheckIcon size={16} strokeWidth={2.2} />
         {t('Lưu cân nặng', 'Save weight')}
       </Button>
-    </Sheet>
+    </>
   )
 }

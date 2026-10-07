@@ -1,8 +1,8 @@
-import type { ButtonHTMLAttributes } from 'react'
+import type { ComponentProps } from 'react'
 import { cn } from '@/lib/cn'
 import { ChevronLeftIcon } from './Icons'
 
-export function BackButton({ className, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {
+export function BackButton({ className, ...props }: ComponentProps<'button'>) {
   return (
     <button
       type="button"

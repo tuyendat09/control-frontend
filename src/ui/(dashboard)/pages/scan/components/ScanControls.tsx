@@ -12,7 +12,7 @@ export function ScanControls({ mode, onModeChange, onManual }: ScanControlsProps
   const t = useT()
 
   return (
-    <div className="absolute inset-x-0 bottom-11 z-[3] flex flex-col items-center gap-5 transition-[opacity,translate] duration-[400ms] ease-expo group-data-[state=found]/scan:pointer-events-none group-data-[state=found]/scan:translate-y-4 group-data-[state=found]/scan:opacity-0">
+    <div data-scan-controls className="absolute inset-x-0 bottom-11 z-[3] flex flex-col items-center gap-5">
       <Segmented
         variant="glass"
         className="w-[228px]"
