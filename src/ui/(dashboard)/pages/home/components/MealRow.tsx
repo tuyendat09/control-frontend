@@ -1,14 +1,18 @@
 import { cn } from '@/lib/cn'
 import type { MealEntry } from '@/types'
 import { MacroChips } from '@/ui/shared/components/MacroChip'
+import { useAnimationRise } from '@/ui/shared/hooks/useAnimationRise'
 
 /** One logged meal: time well · name + macro chips · kcal. */
 export function MealRow({ entry }: { entry: MealEntry }) {
+  const ref = useAnimationRise(Boolean(entry.fresh))
+
   return (
     <div
+      ref={ref}
       className={cn(
         'flex items-center gap-[14px] px-[18px] py-[15px] transition-colors duration-[180ms] hover:bg-tint',
-        entry.fresh && 'animate-rise bg-tint',
+        entry.fresh && 'bg-tint',
       )}
     >
       <div

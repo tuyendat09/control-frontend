@@ -1,7 +1,5 @@
 import { clamp, fmtInt } from '@/lib/format'
-
-/** r = 51 → circumference 320.4 (matches the `ringin` keyframe). */
-const CIRCUMFERENCE = 320.4
+import { RING_LENGTH, useAnimationRing } from '../hooks/useAnimationHome'
 
 interface CalorieRingProps {
   kcal: number
@@ -10,6 +8,7 @@ interface CalorieRingProps {
 
 export function CalorieRing({ kcal, target }: CalorieRingProps) {
   const progress = clamp(kcal / target, 0, 1)
+  const ref = useAnimationRing(progress)
 
   return (
     <div className="relative size-[118px] flex-none">
@@ -23,10 +22,9 @@ export function CalorieRing({ kcal, target }: CalorieRingProps) {
           stroke="var(--acc)"
           strokeWidth="9"
           strokeLinecap="round"
-          strokeDasharray={CIRCUMFERENCE}
-          strokeDashoffset={CIRCUMFERENCE * (1 - progress)}
+          strokeDasharray={RING_LENGTH}
           transform="rotate(-90 59 59)"
-          className="animate-ring transition-[stroke-dashoffset] duration-700 ease-draw"
+          ref={ref}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">

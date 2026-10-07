@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router'
-import { cn } from '@/lib/cn'
 import { BackButton } from '@/ui/shared/components/BackButton'
 import { AuthBackdrop } from './components/AuthBackdrop'
 import { AuthBrand } from './components/AuthBrand'
+import { AuthLeaving } from './components/AuthLeaving'
+import { useAnimationAuthBack } from './hooks/useAnimationAuthBack'
 import { useAuthStage } from './hooks/useAuthStage'
 
 /**
@@ -12,6 +13,7 @@ import { useAuthStage } from './hooks/useAuthStage'
 export function AuthLayout() {
   const navigate = useNavigate()
   const { stage, outlet, leaving } = useAuthStage()
+  const backRef = useAnimationAuthBack(stage)
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-surf">
@@ -19,25 +21,16 @@ export function AuthLayout() {
       <AuthBrand stage={stage} />
 
       <BackButton
+        ref={backRef}
         onClick={() => navigate('/auth')}
         tabIndex={stage === 'form' ? 0 : -1}
-        className={cn(
-          'absolute top-[86px] left-[26px] z-[4] rounded-[12px] transition-[opacity,transform,background-color,color] duration-[400ms]',
-          stage === 'welcome' && 'pointer-events-none -translate-x-2 scale-[.85] opacity-0',
-        )}
+        className="absolute top-[86px] left-[26px] z-[4] rounded-[12px]"
       />
 
       {leaving && (
-        <div
-          key={leaving.key}
-          aria-hidden="true"
-          className={cn(
-            'pointer-events-none absolute inset-0 z-[2] [&_*]:animate-none!',
-            leaving.stage === 'welcome' ? 'animate-stage-out-up' : 'animate-stage-out-down',
-          )}
-        >
+        <AuthLeaving key={leaving.key} stage={leaving.stage}>
           {leaving.node}
-        </div>
+        </AuthLeaving>
       )}
       <div className="absolute inset-0 z-[2]">{outlet}</div>
     </div>

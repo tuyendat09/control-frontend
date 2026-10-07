@@ -3,6 +3,7 @@ import { NavLink } from 'react-router'
 import { cn } from '@/lib/cn'
 import { PlusIcon } from '@/ui/shared/components/Icons'
 import { useT } from '@/ui/shared/hooks/useT'
+import { useAnimationTabBar } from '../hooks/useAnimationTabBar'
 import { useDashboardUi } from '../hooks/useDashboardUi'
 import { HomeTabIcon, InsightsTabIcon, NutritionTabIcon, TrainTabIcon } from './TabIcons'
 
@@ -39,10 +40,15 @@ function TabItem({ to, end, label, icon }: TabItemProps) {
 export function TabBar() {
   const t = useT()
   const { quickLogOpen, openQuickLog, closeQuickLog } = useDashboardUi()
+  const { barRef, plusRef, barHandlers } = useAnimationTabBar(quickLogOpen)
 
   return (
-    <nav className="absolute inset-x-0 bottom-0 z-[8] px-4 pb-[26px]">
-      <div className="flex h-16 items-center rounded-[32px] border border-line bg-surf2 px-[6px] shadow-tabbar">
+    <nav className="absolute inset-x-0 bottom-0 z-[8] px-4 pb-[26px]" style={{ viewTransitionName: 'tabbar' }}>
+      <div
+        ref={barRef}
+        {...barHandlers}
+        className="flex h-16 items-center rounded-[32px] border border-line bg-surf2 px-[6px] shadow-tabbar"
+      >
         <TabItem to="/" end label="Home" icon={(a) => <HomeTabIcon active={a} />} />
         <TabItem to="/training" label={t('Tập', 'Train')} icon={(a) => <TrainTabIcon active={a} />} />
 
@@ -53,11 +59,7 @@ export function TabBar() {
           onClick={quickLogOpen ? closeQuickLog : openQuickLog}
           className="mx-1 flex size-14 flex-none items-center justify-center rounded-full bg-acc text-acc-tx shadow-glow transition-transform duration-200 ease-soft hover:scale-[1.07] active:scale-[.92]"
         >
-          <PlusIcon
-            size={23}
-            strokeWidth={2.3}
-            className={cn('transition-transform duration-[380ms] ease-plus', quickLogOpen && 'rotate-[135deg]')}
-          />
+          <PlusIcon ref={plusRef} size={23} strokeWidth={2.3} />
         </button>
 
         <TabItem to="/nutrition" label={t('Dinh dưỡng', 'Nutrition')} icon={(a) => <NutritionTabIcon active={a} />} />

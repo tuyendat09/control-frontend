@@ -13,6 +13,7 @@ import { ScanPage } from "@/ui/(dashboard)/pages/scan/ScanPage";
 import { ExerciseProgressPage } from "@/ui/(dashboard)/pages/training/progress/ExerciseProgressPage";
 import { SessionPage } from "@/ui/(dashboard)/pages/training/session/SessionPage";
 import { TrainingPage } from "@/ui/(dashboard)/pages/training/TrainingPage";
+import { installRouteTransitions } from '@/lib/routeTransition'
 import { RootLayout } from "@/ui/root/RootLayout";
 
 const fullScreen: DashboardRouteHandle = { hideTabBar: true };
@@ -60,3 +61,5 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
+
+installRouteTransitions(router)

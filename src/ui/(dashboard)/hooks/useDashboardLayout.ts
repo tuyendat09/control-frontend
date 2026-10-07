@@ -1,14 +1,6 @@
-import { useLocation } from 'react-router'
 import { useHideTabBar } from './useHideTabBar'
 
-/**
- * Layout-level behavior: which tab is showing (re-keys the pane so its entrance animation replays
- * on tab change, not when drilling into sub-routes) and whether a full-screen route hides the tab bar.
- */
+/** Layout-level state: full-screen routes (scanner) hide the tab bar. Route motion lives in `lib/routeTransition.ts`. */
 export function useDashboardLayout() {
-  const { pathname } = useLocation()
-  const hideTabBar = useHideTabBar()
-  const tab = pathname.split('/')[1] ?? ''
-
-  return { tab, hideTabBar }
+  return { hideTabBar: useHideTabBar() }
 }

@@ -14,8 +14,9 @@ export function ScanResultSheet({ scanner }: { scanner: Scanner }) {
 
   return (
     <div
+      data-scan-result
       inert={scanner.status !== 'found'}
-      className="absolute inset-x-0 bottom-0 z-[4] translate-y-[104%] rounded-t-[32px] bg-surf px-5 pt-3 pb-[30px] text-tx transition-[translate] duration-[550ms] ease-expo group-data-[state=found]/scan:translate-y-0"
+      className="absolute inset-x-0 bottom-0 z-[4] rounded-t-[32px] bg-surf px-5 pt-3 pb-[30px] text-tx"
     >
       <div className="mx-auto mb-4 h-1 w-[38px] rounded-full bg-line" />
 

@@ -25,7 +25,8 @@ Layout folder `(x)/` holds `XLayout.tsx` plus its own `components/ context/ hook
 - Routes: `src/router.tsx`. Sub-screens are nested routes rendered as overlays (`training/session`, `training/progress`).
 - App-wide state providers (prefs, toast, tracker): wrapped in `src/App.tsx`; implementations in `ui/shared/context`.
 - Tab-scoped state: `(dashboard)/training/context/TrainingProvider.tsx`.
-- Animation: keyframes + `--animate-*` + easing in `src/index.css`; applied as classes in components.
+- Animation: GSAP only (no CSS keyframes). Setup + named eases in `src/lib/motion.ts` (import `gsap`/`useGSAP` from there). Every animation lives in a `useAnimationXxx` hook — shared ones in `ui/shared/hooks`, layout/page ones in that folder's `hooks/`. Anything that appears must also animate out (timeline reversed, or unmount after the exit). Hover/press stay CSS transitions.
+- Route transitions: View Transitions API, wired in `src/lib/routeTransition.ts`; look is designed in `src/index.css` (`::view-transition-*`, `html[data-route-transition=push|pop|switch]`).
 - Copy: bilingual inline via `useT()` → `t('vi', 'en')`.
 - Sample "today" is fixed (`src/lib/date.ts`); data is in-memory (`ui/shared/context/TrackerProvider.tsx`).
 - Install-app logic: `src/lib/installPrompt.ts`, `ui/shared/hooks/useInstallApp.ts`.
