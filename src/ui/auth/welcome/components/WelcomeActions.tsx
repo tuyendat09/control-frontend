@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router'
 import { ArrowRightIcon } from '@/ui/shared/components/Icons'
 import { Button } from '@/ui/shared/components/Button'
+import { useInstallApp } from '@/ui/shared/hooks/useInstallApp'
 import { useT } from '@/ui/shared/hooks/useT'
 
 export function WelcomeActions() {
   const t = useT()
   const navigate = useNavigate()
+  const { installed, install } = useInstallApp()
 
   return (
     <div className="absolute inset-x-0 bottom-11 flex animate-upin flex-col gap-[14px] px-8 [animation-delay:.41s]">
@@ -22,6 +24,15 @@ export function WelcomeActions() {
           'Your data stays on your device. No ads, never sold.',
         )}
       </p>
+      {!installed && (
+        <button
+          type="button"
+          onClick={install}
+          className="self-center text-[12.5px] font-medium text-tx2 underline underline-offset-[3px] transition-colors duration-200 hover:text-tx"
+        >
+          {t('Cài ứng dụng về máy', 'Install app')}
+        </button>
+      )}
     </div>
   )
 }

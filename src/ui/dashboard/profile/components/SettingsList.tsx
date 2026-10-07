@@ -3,12 +3,14 @@ import { DownloadIcon } from '@/ui/shared/components/Icons'
 import { SectionLabel } from '@/ui/shared/components/SectionLabel'
 import { Toggle } from '@/ui/shared/components/Toggle'
 import { usePreferences } from '@/ui/shared/hooks/usePreferences'
+import { useInstallApp } from '@/ui/shared/hooks/useInstallApp'
 import { useT } from '@/ui/shared/hooks/useT'
 import { SettingRow } from './SettingRow'
 
 export function SettingsList({ onExport }: { onExport: () => void }) {
   const t = useT()
   const { theme, lang, toggleTheme, toggleLang } = usePreferences()
+  const { installed, install } = useInstallApp()
 
   return (
     <section>
@@ -26,6 +28,13 @@ export function SettingsList({ onExport }: { onExport: () => void }) {
           onClick={toggleLang}
           value={<span className="text-tx2">{lang === 'vi' ? 'Tiếng Việt' : 'English'}</span>}
         />
+        {!installed && (
+          <SettingRow
+            label={t('Cài ứng dụng về máy', 'Install app')}
+            onClick={install}
+            value={<DownloadIcon size={16} className="text-tx3" />}
+          />
+        )}
         <SettingRow
           label={t('Xuất dữ liệu (JSON)', 'Export data (JSON)')}
           onClick={onExport}
