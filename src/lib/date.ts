@@ -1,50 +1,47 @@
 import type { Lang } from '@/types'
 
-/** The prototype is anchored to a fixed sample month: August 2026. */
-export const SAMPLE_YEAR = 2026
-export const SAMPLE_MONTH = 8
-export const SAMPLE_TODAY = 15
-export const SAMPLE_NOW = '18:32'
-/** Aug 1, 2026 is a Saturday → five blank cells in a Monday-first grid. */
-export const MONTH_LEADING_BLANKS = 5
-export const MONTH_DAYS = 31
-
 const WD_VI = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật']
 const WD_EN = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 export const WD_SHORT_VI = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
 export const WD_SHORT_EN = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-/** Monday-first weekday index (0 = Mon) for a day of the sample month. */
-export function weekdayIndex(day: number) {
-  return (MONTH_LEADING_BLANKS + day - 1) % 7
-}
-
 const dd = (n: number) => String(n).padStart(2, '0')
 
-/** "Thứ 7, 15/08" · "Sat, Aug 15" */
-export function formatDayLabel(day: number, lang: Lang) {
-  const wi = weekdayIndex(day)
+/** "Thứ 7, 15/08" · "Sat, Aug 15" — `key` is a `YYYY-MM-DD` day. */
+export function formatDayLabel(key: string, lang: Lang) {
+  const d = parseDateKey(key)
+  const wi = (d.getDay() + 6) % 7
   return lang === 'vi'
-    ? `${WD_VI[wi]}, ${dd(day)}/0${SAMPLE_MONTH}`
-    : `${WD_EN[wi]}, Aug ${day}`
+    ? `${WD_VI[wi]}, ${dd(d.getDate())}/${dd(d.getMonth() + 1)}`
+    : `${WD_EN[wi]}, ${MONTH_EN[d.getMonth()]} ${d.getDate()}`
 }
 
 /** "T7 15/08" · "Sat 15/08" */
-export function formatShortDay(day: number, lang: Lang) {
-  const wi = weekdayIndex(day)
-  const wd = lang === 'vi' ? WD_SHORT_VI[wi] : WD_SHORT_EN[wi]
-  return `${wd} ${dd(day)}/0${SAMPLE_MONTH}`
+export function formatShortDay(key: string, lang: Lang) {
+  const d = parseDateKey(key)
+  const wd = (lang === 'vi' ? WD_SHORT_VI : WD_SHORT_EN)[(d.getDay() + 6) % 7]
+  return `${wd} ${formatDayMonth(key)}`
 }
 
 /** "15/08" */
-export function formatDayMonth(day: number) {
-  return `${dd(day)}/0${SAMPLE_MONTH}`
+export function formatDayMonth(key: string) {
+  const d = parseDateKey(key)
+  return `${dd(d.getDate())}/${dd(d.getMonth() + 1)}`
 }
 
 /* ───────── Calendar-day helpers (local days, `YYYY-MM-DD` keys) ───────── */
 
-/** "Today" for the app. Fixed to the sample date until the product moves to the real date. */
-export const appToday = () => new Date(SAMPLE_YEAR, SAMPLE_MONTH - 1, SAMPLE_TODAY)
+/** "Today" for the app: the device's local calendar day (midnight boundary). */
+export const appToday = () => {
+  const now = new Date()
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate())
+}
+
+/** Local wall-clock time, `HH:mm`. */
+export const nowTime = () => {
+  const now = new Date()
+  return `${dd(now.getHours())}:${dd(now.getMinutes())}`
+}
 
 /** Local calendar day as `YYYY-MM-DD` (never UTC). */
 export const dateKey = (d: Date) =>
@@ -60,6 +57,18 @@ export const addDays = (d: Date, n: number) => {
   x.setDate(x.getDate() + n)
   return x
 }
+
+/** Whole local days from `from` to `to` (positive when `to` is later). */
+export const daysBetween = (from: Date, to: Date) =>
+  Math.round((Date.UTC(to.getFullYear(), to.getMonth(), to.getDate()) - Date.UTC(from.getFullYear(), from.getMonth(), from.getDate())) / 86400000)
+
+/** True for a real calendar day written as `YYYY-MM-DD`. */
+export const isDateKey = (key: string) => /^\d{4}-\d{2}-\d{2}$/.test(key) && dateKey(parseDateKey(key)) === key
+
+export const daysInMonth = (d: Date) => new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate()
+
+/** Blank cells before day 1 in a Monday-first month grid. */
+export const monthLeadingBlanks = (d: Date) => (new Date(d.getFullYear(), d.getMonth(), 1).getDay() + 6) % 7
 
 /** Monday of the week containing `d`. */
 export const startOfWeek = (d: Date) => addDays(d, -((d.getDay() + 6) % 7))

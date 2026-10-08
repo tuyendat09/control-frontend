@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
+import { formatDayMonth } from '@/lib/date'
 import { useT } from '@/ui/shared/hooks/useT'
 import { useToast } from '@/ui/shared/hooks/useToast'
 import { useSessionDay } from '../../hooks/useSessionDay'
 import { useTraining } from '../../hooks/useTraining'
 
 /** Logic for the session sheet: which exercise is expanded, tick/add sets, finish or save. */
-export function useSession(day: number) {
+export function useSession(day: string) {
   const t = useT()
   const navigate = useNavigate()
   const { showToast } = useToast()
@@ -36,7 +37,7 @@ export function useSession(day: number) {
 
   const create = () => {
     training.createSession(day)
-    showToast(t(`Đã tạo buổi tập cho ngày ${day}`, `Session created for Aug ${day}`))
+    showToast(t(`Đã tạo buổi tập cho ngày ${formatDayMonth(day)}`, `Session created for ${formatDayMonth(day)}`))
   }
 
   return {

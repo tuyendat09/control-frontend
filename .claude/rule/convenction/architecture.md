@@ -28,7 +28,7 @@ Layout folder `(x)/` holds `XLayout.tsx` plus its own `components/ context/ hook
 - Animation: GSAP only (no CSS keyframes). Setup + named eases in `src/lib/motion.ts` (import `gsap`/`useGSAP` from there). Every animation lives in a `useAnimationXxx` hook — shared ones in `ui/shared/hooks`, layout/page ones in that folder's `hooks/`. Anything that appears must also animate out (timeline reversed, or unmount after the exit). Hover/press stay CSS transitions.
 - Route transitions: View Transitions API, wired in `src/lib/routeTransition.ts`; look is designed in `src/index.css` (`::view-transition-*`, `html[data-route-transition=push|pop|switch]`).
 - Copy: bilingual inline via `useT()` → `t('vi', 'en')`.
-- Sample "today" is fixed (`src/lib/date.ts`); data is in-memory (`ui/shared/context/TrackerProvider.tsx`).
+- "Today" is the device date (`appToday()` in `src/lib/date.ts`); sample data is seeded relative to it and held in-memory (`ui/shared/context/TrackerProvider.tsx`).
 - Install-app logic: `src/lib/installPrompt.ts`, `ui/shared/hooks/useInstallApp.ts`.
 
 ## Workflow

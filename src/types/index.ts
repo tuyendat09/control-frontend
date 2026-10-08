@@ -58,8 +58,8 @@ export interface QuickCombo {
 }
 
 export interface WeightEntry {
-  /** Day of the sample month */
-  day: number
+  /** Local calendar day, `YYYY-MM-DD`. */
+  day: string
   kg: number
 }
 

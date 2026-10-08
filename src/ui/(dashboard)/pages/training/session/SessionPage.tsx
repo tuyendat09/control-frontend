@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useParams } from 'react-router'
-import { MONTH_DAYS } from '@/lib/date'
+import { isDateKey } from '@/lib/date'
 import { Button } from '@/ui/shared/components/Button'
 import { OverlayScreen } from '@/ui/shared/components/Screen'
 import { useT } from '@/ui/shared/hooks/useT'
@@ -13,14 +13,14 @@ import { useSession } from './hooks/useSession'
 
 export function SessionPage() {
   const params = useParams()
-  const day = Number(params.day)
+  const day = params.day ?? ''
 
-  if (!Number.isInteger(day) || day < 1 || day > MONTH_DAYS) return <Navigate to="/training" replace />
+  if (!isDateKey(day)) return <Navigate to="/training" replace />
   return <Session day={day} />
 }
 
 /** The "day sheet": exercises and sets for one date. Progress (nested route) opens on top. */
-function Session({ day }: { day: number }) {
+function Session({ day }: { day: string }) {
   const t = useT()
   const s = useSession(day)
 

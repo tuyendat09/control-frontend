@@ -1,5 +1,5 @@
 import { WEIGHT_BASELINE_30D } from '@/data/weight'
-import { SAMPLE_TODAY } from '@/lib/date'
+import { appToday, daysBetween, parseDateKey } from '@/lib/date'
 import { fmtDelta } from '@/lib/format'
 import { useT } from './useT'
 import { useTracker } from './useTracker'
@@ -11,7 +11,7 @@ export function useWeightStats() {
   const last = weightEntries[weightEntries.length - 1]
   const weight = last.kg
   const delta30 = weight - WEIGHT_BASELINE_30D
-  const daysAgo = SAMPLE_TODAY - last.day
+  const daysAgo = daysBetween(parseDateKey(last.day), appToday())
 
   const ago =
     daysAgo <= 0

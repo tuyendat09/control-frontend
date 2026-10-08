@@ -1,16 +1,16 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { useMatch } from 'react-router'
 import { buildSession, dayKindOf, type SessionKind } from '@/data/training'
-import { SAMPLE_TODAY } from '@/lib/date'
+import { appToday, dateKey, isDateKey } from '@/lib/date'
 import type { ExerciseLog } from '@/types'
 import { useRestTimer } from '../hooks/useRestTimer'
 import { TrainingContext, type TrainingValue } from './TrainingContext'
 
 /** What a day looks like before the user touches it. */
-function seedKind(day: number, madeDays: number[]): SessionKind | null {
+function seedKind(day: string, madeDays: string[]): SessionKind | null {
   const kind = dayKindOf(day, madeDays)
   if (kind === 'empty') return null
-  if (day === SAMPLE_TODAY) return 'today'
+  if (day === dateKey(appToday())) return 'today'
   return kind === 'past' ? 'past' : 'new'
 }
 
@@ -19,22 +19,22 @@ function seedKind(day: number, madeDays: number[]): SessionKind | null {
  * selected day, per-day set logs, ghost column toggle and the rest timer.
  */
 export function TrainingProvider({ children }: { children: ReactNode }) {
-  const deepLinked = Number(useMatch('/training/day/:day/*')?.params.day)
-  const [selectedDay, setSelectedDay] = useState(deepLinked > 0 ? deepLinked : SAMPLE_TODAY)
-  const [madeDays, setMadeDays] = useState<number[]>([])
-  const [sessions, setSessions] = useState<Record<number, ExerciseLog[]>>({})
+  const deepLinked = useMatch('/training/day/:day/*')?.params.day ?? ''
+  const [selectedDay, setSelectedDay] = useState(isDateKey(deepLinked) ? deepLinked : dateKey(appToday()))
+  const [madeDays, setMadeDays] = useState<string[]>([])
+  const [sessions, setSessions] = useState<Record<string, ExerciseLog[]>>({})
   const [ghost, setGhost] = useState(true)
-  const [editingDays, setEditingDays] = useState<number[]>([])
+  const [editingDays, setEditingDays] = useState<string[]>([])
   const timer = useRestTimer()
 
   const value = useMemo<TrainingValue>(() => {
-    const seed = (day: number, made = madeDays) => {
+    const seed = (day: string, made = madeDays) => {
       const kind = seedKind(day, made)
       return kind ? buildSession(kind) : []
     }
-    const read = (day: number) => sessions[day] ?? seed(day)
+    const read = (day: string) => sessions[day] ?? seed(day)
 
-    const update = (day: number, fn: (exercises: ExerciseLog[]) => ExerciseLog[]) =>
+    const update = (day: string, fn: (exercises: ExerciseLog[]) => ExerciseLog[]) =>
       setSessions((prev) => ({ ...prev, [day]: fn(prev[day] ?? seed(day)) }))
 
     return {

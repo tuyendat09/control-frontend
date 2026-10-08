@@ -1,26 +1,32 @@
 import { TRAINED_DAYS } from '@/data/training'
-import { MONTH_DAYS, MONTH_LEADING_BLANKS, SAMPLE_TODAY } from '@/lib/date'
+import { addDays, appToday, dateKey, daysInMonth, monthLeadingBlanks } from '@/lib/date'
 import { useTraining } from './useTraining'
 
 export interface CalendarCell {
+  /** Day of the month, shown in the cell. */
   day: number
+  /** Local calendar day, `YYYY-MM-DD`. */
+  date: string
   trained: boolean
   selected: boolean
   today: boolean
 }
 
-/** Monday-first grid for the sample month: leading blanks, then 1…31. */
+/** Monday-first grid for the current month: leading blanks, then every day. */
 export function useCalendar() {
   const { selectedDay, selectDay, madeDays } = useTraining()
 
-  const blanks = Array.from({ length: MONTH_LEADING_BLANKS }, (_, i) => i)
-  const cells: CalendarCell[] = Array.from({ length: MONTH_DAYS }, (_, i) => {
-    const day = i + 1
+  const today = appToday()
+  const first = addDays(today, 1 - today.getDate())
+  const blanks = Array.from({ length: monthLeadingBlanks(today) }, (_, i) => i)
+  const cells: CalendarCell[] = Array.from({ length: daysInMonth(today) }, (_, i) => {
+    const date = dateKey(addDays(first, i))
     return {
-      day,
-      trained: TRAINED_DAYS.includes(day) || madeDays.includes(day),
-      selected: day === selectedDay,
-      today: day === SAMPLE_TODAY,
+      day: i + 1,
+      date,
+      trained: TRAINED_DAYS.includes(date) || madeDays.includes(date),
+      selected: date === selectedDay,
+      today: date === dateKey(today),
     }
   })
 

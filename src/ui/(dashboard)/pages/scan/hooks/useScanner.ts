@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { SCAN_PRODUCTS, type ScanMode } from '@/data/scan'
-import { SAMPLE_NOW } from '@/lib/date'
+import { nowTime } from '@/lib/date'
 import { round1 } from '@/lib/format'
 import type { MealType } from '@/types'
 import { useGoBack } from '@/ui/shared/hooks/useGoBack'
@@ -56,7 +56,7 @@ export function useScanner() {
   const addToMeal = () => {
     const name = t(product.name.vi, product.name.en)
     addEntry({
-      time: SAMPLE_NOW,
+      time: nowTime(),
       name,
       meal,
       kcal,

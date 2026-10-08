@@ -1,7 +1,10 @@
 import type { ExerciseHistory, ExerciseLog, DayState } from '@/types'
-import { SAMPLE_TODAY } from '@/lib/date'
+import { addDays, appToday, dateKey } from '@/lib/date'
 
-export const TRAINED_DAYS = [1, 3, 5, 7, 8, 10, 12, 14, 15]
+const daysAgo = (n: number) => dateKey(addDays(appToday(), -n))
+
+/** Sample history as `YYYY-MM-DD` days, relative to today. */
+export const TRAINED_DAYS = [14, 12, 10, 8, 7, 5, 3, 1, 0].map(daysAgo)
 export const SESSION_COUNT = 23
 
 export const SESSION_MINUTES: Record<Exclude<DayState, 'empty'>, number> = { today: 42, past: 48 }
@@ -73,15 +76,15 @@ export function buildSession(kind: SessionKind): ExerciseLog[] {
   }))
 }
 
-export function dayKindOf(day: number, madeDays: number[]): DayState {
-  if (day === SAMPLE_TODAY || madeDays.includes(day)) return 'today'
+export function dayKindOf(day: string, madeDays: string[]): DayState {
+  if (day === dateKey(appToday()) || madeDays.includes(day)) return 'today'
   return TRAINED_DAYS.includes(day) ? 'past' : 'empty'
 }
 
 export const RECENT_SESSIONS = [
-  { day: 15, name: 'Push A', sets: 11 },
-  { day: 14, name: 'Legs', sets: 15 },
-  { day: 12, name: 'Pull B', sets: 17 },
+  { day: daysAgo(0), name: 'Push A', sets: 11 },
+  { day: daysAgo(1), name: 'Legs', sets: 15 },
+  { day: daysAgo(3), name: 'Pull B', sets: 17 },
 ]
 
 export const COPY_FROM = [

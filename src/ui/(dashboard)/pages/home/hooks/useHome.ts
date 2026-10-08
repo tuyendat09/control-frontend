@@ -1,5 +1,5 @@
 import type { QuickCombo } from '@/types'
-import { SAMPLE_NOW } from '@/lib/date'
+import { nowTime } from '@/lib/date'
 import { useT } from '@/ui/shared/hooks/useT'
 import { useToast } from '@/ui/shared/hooks/useToast'
 import { useTodayTotals } from '@/ui/shared/hooks/useTodayTotals'
@@ -15,7 +15,7 @@ export function useHome() {
   const addCombo = (combo: QuickCombo) => {
     const name = t(combo.name.vi, combo.name.en)
     addEntry({
-      time: SAMPLE_NOW,
+      time: nowTime(),
       name,
       meal: 'dinner',
       kcal: combo.kcal,

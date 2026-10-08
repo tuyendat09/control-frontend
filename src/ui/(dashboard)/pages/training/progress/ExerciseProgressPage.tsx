@@ -16,11 +16,11 @@ export function ExerciseProgressPage() {
   const progress = useExerciseProgress(exerciseId)
 
   if (!progress) return <Navigate to={`/training/day/${day}`} replace />
-  return <Progress day={Number(day)} exerciseId={exerciseId} progress={progress} />
+  return <Progress day={day ?? ''} exerciseId={exerciseId} progress={progress} />
 }
 
 interface ProgressProps {
-  day: number
+  day: string
   exerciseId: string
   progress: NonNullable<ReturnType<typeof useExerciseProgress>>
 }

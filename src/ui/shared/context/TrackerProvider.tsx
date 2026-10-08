@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { buildSeedEntries } from '@/data/mealLog'
 import { INITIAL_WEIGHT_ENTRIES } from '@/data/weight'
-import { SAMPLE_TODAY, appToday, dateKey } from '@/lib/date'
+import { appToday, dateKey } from '@/lib/date'
 import type { MealEntry, WeightEntry } from '@/types'
 import { TrackerContext, type TrackerValue } from './TrackerContext'
 
@@ -57,11 +57,10 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
               items: e.items.map((i) => ({ ...i, id: crypto.randomUUID() })),
             })),
         ]),
-      saveWeight: (kg) =>
-        setWeightEntries((prev) => [
-          ...prev.filter((w) => w.day !== SAMPLE_TODAY),
-          { day: SAMPLE_TODAY, kg },
-        ]),
+      saveWeight: (kg) => {
+        const day = dateKey(appToday())
+        setWeightEntries((prev) => [...prev.filter((w) => w.day !== day), { day, kg }])
+      },
     }),
     [entries, weightEntries],
   )

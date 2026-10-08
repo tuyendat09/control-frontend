@@ -1,4 +1,4 @@
-import { WD_SHORT_EN, WD_SHORT_VI } from '@/lib/date'
+import { WD_SHORT_EN, WD_SHORT_VI, appToday, formatMonth } from '@/lib/date'
 import { Card } from '@/ui/shared/components/Card'
 import { ChevronLeftIcon, ChevronRightIcon } from '@/ui/shared/components/Icons'
 import { usePreferences } from '@/ui/shared/hooks/usePreferences'
@@ -18,11 +18,11 @@ export function MonthCalendar() {
   return (
     <Card className="mx-5 mt-[18px] px-[14px] pt-4 pb-3">
       <div className="flex items-center justify-between px-1.5 pb-3">
-        {/* Only the sample month has data, so month navigation is visual for now. */}
+        {/* Month navigation is visual for now; the grid always shows the current month. */}
         <button type="button" aria-label={t('Tháng trước', 'Previous month')} aria-disabled="true" tabIndex={-1} className={NAV_BUTTON}>
           <ChevronLeftIcon size={15} />
         </button>
-        <div className="text-[14px] font-semibold tracking-[-.01em]">{t('Tháng 8, 2026', 'August 2026')}</div>
+        <div className="text-[14px] font-semibold tracking-[-.01em]">{formatMonth(appToday(), lang)}</div>
         <button type="button" aria-label={t('Tháng sau', 'Next month')} aria-disabled="true" tabIndex={-1} className={NAV_BUTTON}>
           <ChevronRightIcon size={15} />
         </button>

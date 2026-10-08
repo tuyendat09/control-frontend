@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { FOODS } from '@/data/nutrition'
-import { SAMPLE_NOW } from '@/lib/date'
+import { nowTime } from '@/lib/date'
 import { normalize } from '@/lib/format'
 import type { Food, MealType } from '@/types'
 import { useT } from '@/ui/shared/hooks/useT'
@@ -42,7 +42,7 @@ export function useFoodLibrary() {
   /** Adds a 100g serving to the target meal (dinner by default). */
   const addFood = (food: Food) => {
     addEntry({
-      time: SAMPLE_NOW,
+      time: nowTime(),
       name: food.name,
       meal,
       date,
