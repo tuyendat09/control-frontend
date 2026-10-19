@@ -6,7 +6,7 @@ import { SectionLabel } from '@/ui/shared/components/SectionLabel'
 import { useT } from '@/ui/shared/hooks/useT'
 
 /** No session on this date: start fresh or copy an old one. */
-export function EmptyDay({ onCreate }: { onCreate: () => void }) {
+export function EmptyDay({ onCreate, onCopy }: { onCreate: () => void; onCopy: () => void }) {
   const t = useT()
 
   return (
@@ -31,7 +31,7 @@ export function EmptyDay({ onCreate }: { onCreate: () => void }) {
           <button
             key={s.id}
             type="button"
-            onClick={onCreate}
+            onClick={onCopy}
             className="flex w-full items-center justify-between px-[18px] py-[14px] text-left transition-colors duration-[180ms] hover:bg-tint"
           >
             <div>

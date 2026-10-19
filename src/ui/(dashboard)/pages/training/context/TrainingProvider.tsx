@@ -2,7 +2,8 @@ import { useMemo, useState, type ReactNode } from 'react'
 import { useMatch } from 'react-router'
 import { buildSession, dayKindOf, type SessionKind } from '@/data/training'
 import { appToday, dateKey, isDateKey } from '@/lib/date'
-import type { ExerciseLog } from '@/types'
+import { SEED_EXERCISES, logFromExercise } from '@/data/exercises'
+import type { Exercise, ExerciseLog } from '@/types'
 import { useRestTimer } from '../hooks/useRestTimer'
 import { TrainingContext, type TrainingValue } from './TrainingContext'
 
@@ -23,6 +24,7 @@ export function TrainingProvider({ children }: { children: ReactNode }) {
   const [selectedDay, setSelectedDay] = useState(isDateKey(deepLinked) ? deepLinked : dateKey(appToday()))
   const [madeDays, setMadeDays] = useState<string[]>([])
   const [sessions, setSessions] = useState<Record<string, ExerciseLog[]>>({})
+  const [customExercises, setCustomExercises] = useState<Exercise[]>([])
   const [ghost, setGhost] = useState(true)
   const [editingDays, setEditingDays] = useState<string[]>([])
   const timer = useRestTimer()
@@ -33,6 +35,7 @@ export function TrainingProvider({ children }: { children: ReactNode }) {
       return kind ? buildSession(kind) : []
     }
     const read = (day: string) => sessions[day] ?? seed(day)
+    const library = [...SEED_EXERCISES, ...customExercises]
 
     const update = (day: string, fn: (exercises: ExerciseLog[]) => ExerciseLog[]) =>
       setSessions((prev) => ({ ...prev, [day]: fn(prev[day] ?? seed(day)) }))
@@ -43,11 +46,32 @@ export function TrainingProvider({ children }: { children: ReactNode }) {
       madeDays,
       dayKind: (day) => dayKindOf(day, madeDays),
       getExercises: read,
-      createSession: (day) => {
+      createSession: (day, copy = false) => {
         setMadeDays((prev) => (prev.includes(day) ? prev : [...prev, day]))
-        setSessions((prev) => ({ ...prev, [day]: buildSession('new') }))
+        setSessions((prev) => ({ ...prev, [day]: copy ? buildSession('new') : [] }))
         timer.stop()
       },
+      library,
+      createExercise: (name, muscle, equipment) => {
+        const exercise: Exercise = {
+          id: `c-${crypto.randomUUID()}`,
+          name: { vi: name, en: name },
+          muscle,
+          equipment,
+          custom: true,
+        }
+        setCustomExercises((prev) => [...prev, exercise])
+        return exercise
+      },
+      addExercises: (day, ids) =>
+        update(day, (exercises) => {
+          const have = new Set(exercises.map((e) => e.id))
+          const added = ids
+            .filter((id) => !have.has(id))
+            .flatMap((id) => library.find((e) => e.id === id) ?? [])
+            .map(logFromExercise)
+          return [...exercises, ...added]
+        }),
       toggleSet: (day, exerciseId, setId) => {
         const current = read(day)
           .find((e) => e.id === exerciseId)
@@ -82,7 +106,7 @@ export function TrainingProvider({ children }: { children: ReactNode }) {
       timer: { seconds: timer.seconds, running: timer.running, toggle: timer.toggle, stop: timer.stop },
     }
     // `timer` functions are stable enough per render; recompute when timer state changes.
-  }, [selectedDay, madeDays, sessions, ghost, editingDays, timer])
+  }, [selectedDay, madeDays, sessions, customExercises, ghost, editingDays, timer])
 
   return <TrainingContext value={value}>{children}</TrainingContext>
 }

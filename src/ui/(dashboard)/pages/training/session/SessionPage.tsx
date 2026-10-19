@@ -3,7 +3,10 @@ import { isDateKey } from '@/lib/date'
 import { Button } from '@/ui/shared/components/Button'
 import { OverlayScreen } from '@/ui/shared/components/Screen'
 import { useT } from '@/ui/shared/hooks/useT'
+import { AddExerciseButton } from './components/AddExerciseButton'
 import { EmptyDay } from './components/EmptyDay'
+import { EmptySession } from './components/EmptySession'
+import { ExercisePicker } from './components/exercise-picker/ExercisePicker'
 import { ExerciseCard } from './components/ExerciseCard'
 import { GhostToggle } from './components/GhostToggle'
 import { PastBanner } from './components/PastBanner'
@@ -27,22 +30,25 @@ function Session({ day }: { day: string }) {
   return (
     <div className="absolute inset-0 z-[12]">
       <OverlayScreen>
-        <SessionHeader label={s.label} sub={s.sub} onBack={s.close} />
+        <SessionHeader overline={s.overline} title={s.title} meta={s.meta} onBack={s.close} />
 
         {s.kind === 'empty' ? (
-          <EmptyDay onCreate={s.create} />
+          <EmptyDay onCreate={s.create} onCopy={s.copy} />
         ) : (
           <>
             <GhostToggle on={s.ghost} onToggle={s.toggleGhost} />
             {s.kind === 'today' && <RestTimerCard timer={s.timer} />}
             {s.kind === 'past' && <PastBanner editing={s.editing} onEdit={s.startEditing} />}
 
+            {s.exercises.length === 0 && <EmptySession />}
+
             {s.exercises.map((exercise, i) => (
               <ExerciseCard
                 key={exercise.id}
                 exercise={exercise}
                 expanded={exercise.id === s.expandedId}
-                first={i === 0}
+                position={i + 1}
+                revealOrder={s.picker.added.includes(exercise.id) ? s.picker.added.indexOf(exercise.id) : null}
                 ghost={s.ghost}
                 readOnly={s.readOnly}
                 onExpand={() => s.expand(exercise.id)}
@@ -51,6 +57,8 @@ function Session({ day }: { day: string }) {
                 onOpenProgress={() => s.openProgress(exercise.id)}
               />
             ))}
+
+            {!s.readOnly && <AddExerciseButton onClick={s.picker.show} />}
 
             {(s.kind === 'today' || s.editing) && (
               <Button onClick={s.finish} className="mx-5 mt-5 h-[50px] w-[calc(100%-40px)] text-[14.5px] hover:opacity-[.88]">
@@ -61,6 +69,7 @@ function Session({ day }: { day: string }) {
         )}
       </OverlayScreen>
       <Outlet />
+      <ExercisePicker picker={s.picker} />
     </div>
   )
 }

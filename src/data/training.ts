@@ -1,5 +1,6 @@
 import type { ExerciseHistory, ExerciseLog, DayState } from '@/types'
 import { addDays, appToday, dateKey } from '@/lib/date'
+import { SEED_EXERCISES } from './exercises'
 
 const daysAgo = (n: number) => dateKey(addDays(appToday(), -n))
 
@@ -11,6 +12,9 @@ export const SESSION_MINUTES: Record<Exclude<DayState, 'empty'>, number> = { tod
 
 /** Home "Session" tile recap. */
 export const LAST_SESSION = { name: 'Push A', lifts: 5, sets: 18, minutes: 62 }
+
+/** Title of a day's session (sample data has no per-session naming yet). */
+export const SESSION_NAME = 'Push A'
 
 interface ExerciseTemplate {
   id: string
@@ -64,6 +68,8 @@ export function buildSession(kind: SessionKind): ExerciseLog[] {
   return TEMPLATES.map((ex, exIndex) => ({
     id: ex.id,
     name: ex.name,
+    nameVi: SEED_EXERCISES.find((e) => e.id === ex.id)?.name.vi ?? ex.name,
+    equipment: SEED_EXERCISES.find((e) => e.id === ex.id)?.equipment ?? 'body',
     lastDate: ex.lastDate,
     lastSummary: ex.lastSummary,
     sets: ex.sets.map((s, i) => ({

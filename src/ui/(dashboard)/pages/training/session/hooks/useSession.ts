@@ -1,18 +1,23 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { formatDayMonth } from '@/lib/date'
+import { SESSION_NAME } from '@/data/training'
+import { formatDayMonth, formatShortDay } from '@/lib/date'
+import { usePreferences } from '@/ui/shared/hooks/usePreferences'
 import { useT } from '@/ui/shared/hooks/useT'
 import { useToast } from '@/ui/shared/hooks/useToast'
 import { useSessionDay } from '../../hooks/useSessionDay'
 import { useTraining } from '../../hooks/useTraining'
+import { useExercisePicker } from './useExercisePicker'
 
 /** Logic for the session sheet: which exercise is expanded, tick/add sets, finish or save. */
 export function useSession(day: string) {
   const t = useT()
+  const { lang } = usePreferences()
   const navigate = useNavigate()
   const { showToast } = useToast()
   const training = useTraining()
   const session = useSessionDay(day)
+  const picker = useExercisePicker(day)
 
   const [openId, setOpenId] = useState<string | null>(null)
   // Default to the first exercise until the user picks another.
@@ -35,13 +40,19 @@ export function useSession(day: string) {
     navigate('/training')
   }
 
-  const create = () => {
-    training.createSession(day)
+  const create = (copy = false) => {
+    training.createSession(day, copy)
     showToast(t(`Đã tạo buổi tập cho ngày ${formatDayMonth(day)}`, `Session created for ${formatDayMonth(day)}`))
   }
 
+  const hasSession = session.kind !== 'empty'
+
   return {
     ...session,
+    picker,
+    overline: hasSession ? `${formatShortDay(day, lang)} · ${t('Buổi tập', 'Session')}` : '',
+    title: hasSession ? SESSION_NAME : session.label,
+    meta: hasSession ? `${session.stats.lifts} ${t('bài', 'lifts')}` : '',
     ghost: training.ghost,
     toggleGhost: training.toggleGhost,
     timer: training.timer,
@@ -52,7 +63,8 @@ export function useSession(day: string) {
     addSet: (exerciseId: string) => training.addSet(day, exerciseId),
     startEditing: () => training.startEditing(day),
     finish,
-    create,
+    create: () => create(),
+    copy: () => create(true),
     close: () => navigate('/training'),
     openProgress: (exerciseId: string) => navigate(`/training/day/${day}/progress/${exerciseId}`),
   }
