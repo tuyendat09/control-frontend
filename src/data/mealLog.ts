@@ -3,7 +3,7 @@ import type { MealEntry, MealItem, MealType } from '@/types'
 
 /**
  * Sample food-log history. Replaced by real persisted data once storage lands.
- * Today matches the Home screen; Aug 13 is deliberately empty (to show the empty state).
+ * Today matches the Home screen; the 13th is deliberately empty (to show the empty state).
  */
 
 // name · qty · kcal · P · C · F
@@ -60,14 +60,15 @@ function makeEntry(date: string, meal: MealType, ids: string[]): MealEntry {
   }
 }
 
-/** Entries for every day of the sample month up to (and including) today. */
+/** Entries for the last 15 days, today included. */
 export function buildSeedEntries(): MealEntry[] {
   const today = appToday()
   const todayKey = dateKey(today)
   const out: MealEntry[] = []
 
-  for (let n = 1; n <= today.getDate(); n++) {
-    const day = new Date(today.getFullYear(), today.getMonth(), n)
+  for (let ago = 14; ago >= 0; ago--) {
+    const day = addDays(today, -ago)
+    const n = day.getDate()
     const key = dateKey(day)
 
     if (key === todayKey) {

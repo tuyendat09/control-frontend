@@ -3,7 +3,7 @@ import type { CalendarCell } from '../hooks/useCalendar'
 
 interface CalendarDayProps {
   cell: CalendarCell
-  onSelect: (day: number) => void
+  onSelect: (date: string) => void
 }
 
 export function CalendarDay({ cell, onSelect }: CalendarDayProps) {
@@ -12,7 +12,7 @@ export function CalendarDay({ cell, onSelect }: CalendarDayProps) {
       type="button"
       aria-pressed={cell.selected}
       aria-current={cell.today ? 'date' : undefined}
-      onClick={() => onSelect(cell.day)}
+      onClick={() => onSelect(cell.date)}
       className={cn(
         'flex h-[38px] flex-col items-center justify-center gap-[3px] rounded-[14px] text-[13px] transition-colors duration-[180ms]',
         cell.selected ? 'bg-acc font-semibold text-acc-tx' : 'text-tx2 hover:bg-tint hover:text-tx',

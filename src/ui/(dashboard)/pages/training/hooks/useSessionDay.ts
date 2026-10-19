@@ -5,7 +5,7 @@ import { useT } from '@/ui/shared/hooks/useT'
 import { useTraining } from './useTraining'
 
 /** Everything the UI needs to know about one calendar day's session. */
-export function useSessionDay(day: number) {
+export function useSessionDay(day: string) {
   const t = useT()
   const { lang } = usePreferences()
   const { dayKind, getExercises, editingDays } = useTraining()

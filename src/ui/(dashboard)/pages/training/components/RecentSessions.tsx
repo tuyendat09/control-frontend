@@ -14,7 +14,7 @@ export function RecentSessions() {
   const navigate = useNavigate()
   const { selectDay } = useTraining()
 
-  const jump = (day: number) => {
+  const jump = (day: string) => {
     selectDay(day)
     navigate(`/training/day/${day}`)
   }

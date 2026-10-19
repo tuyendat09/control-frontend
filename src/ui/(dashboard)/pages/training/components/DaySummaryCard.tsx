@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router'
+import { formatDayMonth } from '@/lib/date'
 import { fmtInt } from '@/lib/format'
 import { Button } from '@/ui/shared/components/Button'
 import { Card } from '@/ui/shared/components/Card'
@@ -20,7 +21,7 @@ export function DaySummaryCard() {
   const open = () => navigate(`/training/day/${selectedDay}`)
   const create = () => {
     createSession(selectedDay)
-    showToast(t(`Đã tạo buổi tập cho ngày ${selectedDay}`, `Session created for Aug ${selectedDay}`))
+    showToast(t(`Đã tạo buổi tập cho ngày ${formatDayMonth(selectedDay)}`, `Session created for ${formatDayMonth(selectedDay)}`))
     open()
   }
 

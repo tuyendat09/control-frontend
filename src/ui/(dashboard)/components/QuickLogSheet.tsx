@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { useNavigate } from 'react-router'
-import { SAMPLE_TODAY } from '@/lib/date'
+import { appToday, dateKey, formatDayLabel } from '@/lib/date'
 import {
   AppleIcon,
   BarcodeScanIcon,
@@ -9,6 +9,7 @@ import {
   TrendIcon,
 } from '@/ui/shared/components/Icons'
 import { Sheet } from '@/ui/shared/components/Sheet'
+import { usePreferences } from '@/ui/shared/hooks/usePreferences'
 import { useT } from '@/ui/shared/hooks/useT'
 import { useWeightStats } from '@/ui/shared/hooks/useWeightStats'
 import { useDashboardUi } from '../hooks/useDashboardUi'
@@ -41,7 +42,9 @@ function QuickLogRow({ icon, title, subtitle, onClick }: QuickLogRowProps) {
 /** Center "+" action sheet. */
 export function QuickLogSheet() {
   const t = useT()
+  const { lang } = usePreferences()
   const navigate = useNavigate()
+  const today = dateKey(appToday())
   const { quickLogOpen, closeQuickLog, openWeight } = useDashboardUi()
   const { lastLabel } = useWeightStats()
 
@@ -55,7 +58,7 @@ export function QuickLogSheet() {
       <div className="px-1 pb-[14px]">
         <h2 className="m-0 font-serif text-[23px] leading-[1.1] font-normal">{t('Ghi nhanh', 'Quick log')}</h2>
         <div className="mt-[3px] text-[12.5px] text-tx3">
-          {t(`Hôm nay, ${SAMPLE_TODAY}/08`, `Today, Aug ${SAMPLE_TODAY}`)}
+          {t('Hôm nay', 'Today')} · {formatDayLabel(today, lang)}
         </div>
       </div>
       <div className="flex flex-col gap-[10px]">
@@ -69,7 +72,7 @@ export function QuickLogSheet() {
           icon={<BarsIcon size={19} />}
           title={t('Bắt đầu buổi tập', 'Start a session')}
           subtitle={t('Tạo mới hoặc chép từ buổi cũ', 'Fresh session or copy an old one')}
-          onClick={go(`/training/day/${SAMPLE_TODAY}`)}
+          onClick={go(`/training/day/${today}`)}
         />
         <QuickLogRow
           icon={<BarcodeScanIcon size={19} />}

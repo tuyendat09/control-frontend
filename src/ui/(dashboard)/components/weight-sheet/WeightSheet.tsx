@@ -3,7 +3,7 @@ import { Button } from '@/ui/shared/components/Button'
 import { Sheet } from '@/ui/shared/components/Sheet'
 import { useT } from '@/ui/shared/hooks/useT'
 import { useWeightStats } from '@/ui/shared/hooks/useWeightStats'
-import { SAMPLE_TODAY, formatDayLabel } from '@/lib/date'
+import { appToday, dateKey, formatDayLabel } from '@/lib/date'
 import { usePreferences } from '@/ui/shared/hooks/usePreferences'
 import { useDashboardUi } from '../../hooks/useDashboardUi'
 import { useWeightDraft } from '../../hooks/useWeightDraft'
@@ -44,7 +44,7 @@ function WeightSheetBody() {
         <div>
           <h2 className="m-0 font-serif text-[23px] leading-[1.1] font-normal">{t('Cân nặng hôm nay', 'Today’s weight')}</h2>
           <div className="mt-[3px] text-[12.5px] text-tx3">
-            {formatDayLabel(SAMPLE_TODAY, lang)} · {t('buổi sáng, bụng rỗng', 'morning, fasted')}
+            {formatDayLabel(dateKey(appToday()), lang)} · {t('buổi sáng, bụng rỗng', 'morning, fasted')}
           </div>
         </div>
         <div className="text-[11.5px] whitespace-nowrap text-tx3">{lastLabel}</div>

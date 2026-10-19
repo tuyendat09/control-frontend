@@ -58,8 +58,8 @@ export interface QuickCombo {
 }
 
 export interface WeightEntry {
-  /** Day of the sample month */
-  day: number
+  /** Local calendar day, `YYYY-MM-DD`. */
+  day: string
   kg: number
 }
 
@@ -71,11 +71,48 @@ export interface SetLog {
   prev?: { kg: number; reps: number }
 }
 
+export type MuscleGroup = 'chest' | 'back' | 'legs' | 'shoulders' | 'arms' | 'core'
+export type Equipment = 'barbell' | 'dumbbell' | 'cable' | 'machine' | 'body'
+/** Drives the mascot guide. */
+export type MovementPattern =
+  | 'squat'
+  | 'hinge'
+  | 'push-horizontal'
+  | 'push-vertical'
+  | 'pull-horizontal'
+  | 'pull-vertical'
+  | 'curl'
+  | 'extend'
+  | 'hold'
+
+/** One entry of the exercise library (shared seed + the user's own). */
+export interface Exercise {
+  id: string
+  name: LocalizedText
+  muscle: MuscleGroup
+  equipment: Equipment
+  pattern?: MovementPattern
+  custom?: boolean
+}
+
+/** Latest logged work for an exercise; `daysAgo` is relative to today (sample data). */
+export interface ExerciseLast {
+  daysAgo: number
+  sets: number
+  reps: number
+  kg?: number
+  /** How many sessions it appears in (ranks suggestions). */
+  count: number
+}
+
 export interface ExerciseLog {
   id: string
   name: string
+  nameVi: string
+  equipment: Equipment
+  /** Empty when the exercise has no history yet. */
   lastDate: string
-  /** e.g. "4×8 @ 60kg" */
+  /** e.g. "4×8 @ 60kg"; empty when the exercise has no history yet. */
   lastSummary: string
   sets: SetLog[]
 }
